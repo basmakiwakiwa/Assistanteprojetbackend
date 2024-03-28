@@ -1,4 +1,7 @@
 package tn.basma.babysitterback3.exception;
 
-public class MailException {
+public class MailException extends org.springframework.mail.MailException {
+    public MailException(String message) {
+        super(message);
+    }
 }

@@ -1,2 +1,6 @@
-package tn.basma.babysitterback3.entites;public enum Role {
-}
+package tn.basma.babysitterback3.entites;
+
+public enum Role {
+        ADMIN,PARENT,BABYSITTER
+
+    }
