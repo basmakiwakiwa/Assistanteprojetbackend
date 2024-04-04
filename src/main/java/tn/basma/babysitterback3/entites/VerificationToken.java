@@ -26,13 +26,17 @@ public class VerificationToken {
 
     private static final int EXPIRATION_TIME = 1;
 
-    @OneToOne
-    @JoinColumn(name = "user_id")
-    private User user;
+
+
 
     @CreationTimestamp
     @Column(name = "created_at")
     private LocalDateTime createdAt;
+
+    @OneToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
 
 
     public VerificationToken(String token, User user) {

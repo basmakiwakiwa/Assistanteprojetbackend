@@ -1,5 +1,6 @@
 package tn.basma.babysitterback3.entites;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -46,6 +47,7 @@ public class Babysitter extends User {
     Set<competence> comp;
 
 //hthya relation bin babysitter w diplome
+
     @ManyToMany
     Set<Diplomebabysitter> diplomebabysitters;
 

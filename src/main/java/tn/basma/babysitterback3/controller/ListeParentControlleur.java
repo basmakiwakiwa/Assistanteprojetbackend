@@ -2,7 +2,9 @@ package tn.basma.babysitterback3.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import tn.basma.babysitterback3.dto.ParentDto;
 import tn.basma.babysitterback3.entites.Parent;
+import tn.basma.babysitterback3.entites.User;
 import tn.basma.babysitterback3.service.ListeParent;
 
 import java.util.List;
@@ -18,13 +20,27 @@ public class ListeParentControlleur {
 
 
 
+    @DeleteMapping(value="/deleteuser/{user_id}")
+    public void deleteuser(@PathVariable Long user_id)
+    {
+        listParentServ.deleteUser(user_id);
+    }
 
 
-    //methode affiche liste parents
 
     @GetMapping("/affichelisteParent")
-    public List<Parent> getAllParent ()
+    public List<Parent> getAllParent()
     {
         return  listParentServ.getAllParent();
     }
+
+    @PutMapping(value="/updateuser/{user_id}")
+    public Parent updateParent(@PathVariable Long user_id , Parent parent )
+    {
+       return  listParentServ.updateParent(user_id,parent);
+    }
+
+
+
+
 }

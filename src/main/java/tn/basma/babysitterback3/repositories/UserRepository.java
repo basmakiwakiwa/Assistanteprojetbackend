@@ -8,11 +8,18 @@ import tn.basma.babysitterback3.entites.User;
 
 import java.util.Optional;
 
-public interface UserRepository extends JpaRepository<User, Long> {
-    boolean existsByEmail(String email);
+public interface UserRepository extends JpaRepository<User, Long> {    boolean existsByEmail(String email);
     Optional<User> findByEmail(String email);
+
+
     @Modifying
     @Transactional
     @Query("update User u set u.password = ?2 where u.email = ?1 ")
     void updatePassword(String email, String password);
+
+
+
+
+
+
 }

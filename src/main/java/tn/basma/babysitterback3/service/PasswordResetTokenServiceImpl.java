@@ -1,93 +1,93 @@
-package tn.basma.babysitterback3.service.impl;
+package tn.basma.babysitterback3.service;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import tn.basma.babysitterback3.dto.ChangePasswordResetRequest;
 import tn.basma.babysitterback3.dto.EmailDetails;
-import tn.basma.babysitterback3.entites.ForgotPasswordToken;
-import tn.basma.babysitterback3.entites.User;
+import tn.basma.babysitterback3.entites.*;
 import tn.basma.babysitterback3.repositories.ForgotPasswordTokenRepository;
 import tn.basma.babysitterback3.repositories.UserRepository;
-import tn.basma.babysitterback3.service.EmailService;
-import tn.basma.babysitterback3.service.PasswordResetTokenService;
 
 import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 import java.util.Date;
 import java.util.Random;
 
 @Service
 @RequiredArgsConstructor
-public class PasswordResetTokenServiceImpl implements PasswordResetTokenService {
+public class PasswordResetTokenServiceImpl implements PasswordResetTokenService  {
     private final UserRepository userRepository;
     private final ForgotPasswordTokenRepository forgotPasswordRepository;
     private final EmailService emailService;
     private final PasswordEncoder passwordEncoder;
 
-    //send mail for email verification
-    public ResponseEntity<String> verifyEmail(String email){
-        User user = userRepository.findByEmail(email)
+    //send mail for email verification pwd oublier
+    public ResponseEntity<Responseemailpwdoub> verifyEmail(Verifpwdemail email){
+        User user = userRepository.findByEmail(email.getEmail())
                 .orElseThrow(() -> new UsernameNotFoundException("Please provide an valid email"));
+
+        forgotPasswordRepository.deleteotpduplique(user.getId());
         //time to formulate the mail body
+
         int token = otpGenerator();
         EmailDetails mailBody = EmailDetails
                 .builder()
-                .to(email)
+                .to(email.getEmail())
                 .subject("OTP for Forgot Password request")
                 .messageBody("This is the OTP for your Forgot Password request : " + token)
                 .build();
         ForgotPasswordToken fp = ForgotPasswordToken
                 .builder()
                 .token(token)
-                .expirationTime(new Date(System.currentTimeMillis() + 24 * 60 * 1000))
+                //.expirationTime(new Date(System.currentTimeMillis() + 24 * 60 * 1000))
+                .expirationTime(Date.from(Instant.now().plus(24, ChronoUnit.HOURS)))
+
                 .user(user)
                 .build();
-
-
+        Responseemailpwdoub message = Responseemailpwdoub.builder().messageResponse("avec succees")
+                .build();
         //Send Mail
-        emailService.sendSimpleMail(mailBody);
+        emailService.sendMail(mailBody);
         forgotPasswordRepository.save(fp);
 
-        return ResponseEntity.ok("Email sent for verfication successfully");
+        return ResponseEntity.ok(message);
 
     }
 
-    public ResponseEntity<String> verifyOtp(Integer token, String email){
-        User user = userRepository.findByEmail(email)
+    public ResponseEntity<Responseemailpwdoub> verifyOtp(Verifyotppwdoublier verif){
+        User user = userRepository.findByEmail(verif.getEmail())
                 .orElseThrow(() -> new UsernameNotFoundException("Please provide an valid email"));
 
-        ForgotPasswordToken fp =forgotPasswordRepository.findByTokenAndUser(token,user)
-                .orElseThrow(()-> new RuntimeException("Invalid OTP for email"+email ));
+        ForgotPasswordToken fp =forgotPasswordRepository.findByTokenAndUser(verif.getOtp(),user)
 
-        //Check if the expiration time of OTP is not expired
-        if (fp.getExpirationTime().before(Date.from(Instant.now()))){
-            forgotPasswordRepository.deleteById(fp.getId());
-            return new ResponseEntity<>("OTP has expired", HttpStatus.EXPECTATION_FAILED);
-        }
+                .orElseThrow(()-> new RuntimeException("Invalid OTP for email"+verif.getEmail() ));
+        System.out.println(fp);
 
-        return ResponseEntity.ok("OTP verified ");
+
+
+        Responseemailpwdoub message = Responseemailpwdoub.builder().messageResponse("avec succees")
+                .build();
+
+        return ResponseEntity.ok(message);
 
     }
 
 
-    //Now User Can change the password
+    //Now User Can change the password pwdoublier///////////// communt
 
-    public ResponseEntity<String> changePasswordHandler(
-            ChangePasswordResetRequest changePassword,
-            String email
-    ){
+    public ResponseEntity<Responseemailpwdoub> changePasswordHandler(ChangePasswordResetRequest changePassword){
         boolean areEqual = (changePassword.getNewPassword()).equals(changePassword.getConfirmationPassword());
-        if (!areEqual){
-            return new ResponseEntity<>("Please enter the password again!",HttpStatus.EXPECTATION_FAILED);
-        }
+
+        Responseemailpwdoub message = Responseemailpwdoub.builder().messageResponse("avec succees")
+                .build();
 
         //We need to encode password
         String encodedPassword = passwordEncoder.encode(changePassword.getNewPassword());
-        userRepository.updatePassword(email,encodedPassword);
-        return ResponseEntity.ok("Password has been succesfully changed!");
+        userRepository.updatePassword(changePassword.getEmail(),encodedPassword);
+
+        return ResponseEntity.ok(message);
 
     }
 

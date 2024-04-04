@@ -7,8 +7,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import tn.basma.babysitterback3.dto.*;
-import tn.basma.babysitterback3.entites.User;
-import tn.basma.babysitterback3.repositories.listParentRepo;
 import tn.basma.babysitterback3.service.AuthenticationService;
 
 import java.io.IOException;
