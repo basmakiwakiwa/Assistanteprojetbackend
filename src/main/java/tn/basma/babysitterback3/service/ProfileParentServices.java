@@ -8,4 +8,9 @@ public interface ProfileParentServices {
 
 
     public Optional<Parent> getParent(String email);
+
+
+
+    //hthya methode modifier information parent
+    public void saveParent(Parent parent);
 }

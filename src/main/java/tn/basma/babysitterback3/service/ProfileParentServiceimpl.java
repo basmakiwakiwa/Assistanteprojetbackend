@@ -20,4 +20,11 @@ public class ProfileParentServiceimpl  implements  ProfileParentServices   {
         return parentrepo.findByEmail(email);
     }
 
+
+    @Override
+    public void saveParent(Parent parent) {
+        parentrepo.save(parent);
+    }
+
+
 }
