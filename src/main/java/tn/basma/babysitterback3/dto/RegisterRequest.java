@@ -1,7 +1,6 @@
 package tn.basma.babysitterback3.dto;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
@@ -22,3 +21,4 @@ public class RegisterRequest {
     private int mobile;
     private Role role;
 }
+

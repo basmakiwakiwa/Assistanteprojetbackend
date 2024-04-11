@@ -13,10 +13,14 @@ import org.springframework.stereotype.Service;
 import tn.basma.babysitterback3.dto.*;
 import tn.basma.babysitterback3.entites.*;
 import tn.basma.babysitterback3.listener.RegistrationCompleteEvent;
+import tn.basma.babysitterback3.repositories.DiplomeRepository;
 import tn.basma.babysitterback3.repositories.TokenRepository;
 import tn.basma.babysitterback3.repositories.UserRepository;
 
 import java.io.IOException;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 import static tn.basma.babysitterback3.service.UserService.applicationUrl;
 
@@ -29,6 +33,8 @@ public class AuthenticationService {
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
     private final ApplicationEventPublisher publisher;
+
+    private  final DiplomeRepository diplomeRepository;
 
     public Response register(RegisterRequest userRequest, final HttpServletRequest request) {
 
@@ -55,21 +61,42 @@ public class AuthenticationService {
         User user ;
         User savedUser = null ;
         if (userRequest instanceof BabySitterDto ) {
-            user =new Babysitter();
-            user = BabySitterDto.toEntity((BabySitterDto)userRequest);
-            user.setPassword(passwordEncoder.encode(user.getPassword()));
-            user.setConfirmeMDP(passwordEncoder.encode(user.getConfirmeMDP()));
-            user.setRole(Role.BABYSITTER);
-            var saveUsers = repository.save(user);
+            BabySitter babySitter =new BabySitter();
+            babySitter = BabySitterDto.toEntity((BabySitterDto)userRequest);
+            babySitter.setPassword(passwordEncoder.encode(babySitter.getPassword()));
+            babySitter.setConfirmeMDP(passwordEncoder.encode(babySitter.getConfirmeMDP()));
+            babySitter.setRole(Role.BABYSITTER);
+            //
+            List<Long> strDiploms = ((BabySitterDto) userRequest).getIddiplome();
+            Set<Diplome> diplomes = new HashSet<>();
+
+                strDiploms .forEach(id -> {
+
+                    Diplome diplome = (Diplome) diplomeRepository.findById(id)
+                            .orElseThrow(() -> new RuntimeException("Error: diplome is not found."));
+                    diplomes.add(diplome);
+
+                });
+            babySitter.setDiplomeBabysitter(diplomes);
+
+
+
+
+            var saveUsers = repository.save(babySitter);
 
             publisher.publishEvent(new RegistrationCompleteEvent(saveUsers, applicationUrl(request)));
-            repository.save(user);
+            repository.save(babySitter);
 
             return Response.builder()
                     .responseMessage("register")
-                    .email(user.getEmail())
+                    .email(babySitter.getEmail())
                     .build();
         }
+
+
+
+
+
         if (userRequest instanceof ParentDto ) {
             user =new Parent();
             user = ParentDto.toEntity((ParentDto)userRequest);

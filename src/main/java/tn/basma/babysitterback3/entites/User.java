@@ -94,4 +94,15 @@ public class User implements UserDetails {
     @OneToOne(mappedBy = "userEntity")
     private Image userImage;
 
+
+
+
+
+
+
+
+
+
+
+
 }

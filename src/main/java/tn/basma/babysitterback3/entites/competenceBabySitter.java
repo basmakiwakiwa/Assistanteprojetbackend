@@ -1,11 +1,12 @@
 package tn.basma.babysitterback3.entites;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
-
-@EqualsAndHashCode
 @Getter
 @Setter
 @AllArgsConstructor
@@ -13,17 +14,16 @@ import lombok.experimental.FieldDefaults;
 @FieldDefaults(level= AccessLevel.PRIVATE)
 
 @Entity
-public class Disponibilitebabysitter {
+public class competenceBabySitter {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 
-    private Long idDispo;
+    private Long id;
+    private  String nomComp;
+
+//hthya relation bin comp wel babysitter
 
 
-//lhne ene bch naml relation binn baby sitter wel disponibilite
 
-    @OneToOne
-
-    private Babysitter Babysitter;
 
 }

@@ -34,6 +34,12 @@ public class AuthenticationController {
     )  {
         return service.register(userRequest,request);
     }
+
+    
+
+
+
+
     @PostMapping("/register/Admin")
     public Response register(
             @RequestBody @Valid AdminDeto userRequest,

@@ -3,10 +3,10 @@ package tn.basma.babysitterback3.dto;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import lombok.experimental.SuperBuilder;
-import tn.basma.babysitterback3.entites.Babysitter;
-import tn.basma.babysitterback3.entites.Parent;
+import tn.basma.babysitterback3.entites.BabySitter;
 
 import java.util.Date;
+import java.util.List;
 
 @Getter
 @Setter
@@ -18,7 +18,6 @@ public class BabySitterDto extends RegisterRequest{
 
     private String  description;
     private Date dateN;
-    private String  Statutmarital;
     private int     budget;
     private String  dispo;
     private String  langues;
@@ -30,9 +29,11 @@ public class BabySitterDto extends RegisterRequest{
     private String  etatcivil;
     private String  niveaudeetude;
 
+    private List<Long> iddiplome;
 
-    public static Babysitter toEntity(BabySitterDto request) {
-        return Babysitter.builder()
+
+    public static BabySitter toEntity(BabySitterDto request) {
+        return BabySitter.builder()
                 .nom(request.getNom())
                 .prenom(request.getPrenom())
                 .email(request.getEmail())
@@ -42,7 +43,7 @@ public class BabySitterDto extends RegisterRequest{
                 .confirmeMDP(request.getConfirmeMDP())
                 .description(request.getDescription())
                 .dateN(request.getDateN())
-                .Statutmarital(request.getStatutmarital())
+
                 .budget(request.getBudget())
                 .dispo(request.getDispo())
                 .langues(request.getLangues())
@@ -55,8 +56,12 @@ public class BabySitterDto extends RegisterRequest{
                 .niveaudeetude(request.getNiveaudeetude())
 
                 .role(request.getRole())
+
                 .build();
     }
+
+
+
 
 
 }

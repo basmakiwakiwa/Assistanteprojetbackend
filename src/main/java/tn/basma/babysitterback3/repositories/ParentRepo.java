@@ -10,4 +10,5 @@ public interface ParentRepo extends JpaRepository<Parent,Long> {
 
     Optional<Parent> findByEmail(String email);
 
+    Parent getParentById(Long id);
 }

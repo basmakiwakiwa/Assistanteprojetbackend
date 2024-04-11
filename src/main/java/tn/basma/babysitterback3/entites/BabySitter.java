@@ -18,11 +18,10 @@ import java.util.Set;
 @Entity
 @DiscriminatorValue("babysitter")
 @SuperBuilder
-public class Babysitter extends User {
+public class BabySitter extends User {
 
     private String  description;
     private Date    dateN;
-    private String  Statutmarital;
     private int     budget;
     private String  dispo;
     private String  langues;
@@ -35,21 +34,16 @@ public class Babysitter extends User {
     private String  niveaudeetude;
 
 
-
 //hthya relation bin baby siter w dispo
 
     @OneToOne(mappedBy = "Babysitter")
-    private Disponibilitebabysitter disponibilitebabysitter;
+    private DisponibiliteBabysitter disponibilitebabysitter;
 
-    //hthya relation bin babysitter wel competance
-
+    @JsonIgnore
     @ManyToMany
-    Set<competence> comp;
+    @JoinTable(name = "BabysitterDiplome", joinColumns =@JoinColumn(name = "id"),inverseJoinColumns = @JoinColumn(name = "iddip"))
+    private Set<Diplome> diplomeBabysitter ;
 
-//hthya relation bin babysitter w diplome
-
-    @ManyToMany
-    Set<Diplomebabysitter> diplomebabysitters;
 
 
 }

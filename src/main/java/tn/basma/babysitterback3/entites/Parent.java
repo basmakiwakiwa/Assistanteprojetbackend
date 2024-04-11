@@ -28,7 +28,9 @@ public class Parent   extends User {
 
 
     //hthya relation bin parent wel annonce eli bch yhabtha
+    //mappedBy  manhha annonce ethya chkoub eli bch ymapha
+    //cascade all mannhha kn bch nfas5ou haja raw bch yfas5hom lkoul
     @JsonIgnore
-    @OneToMany(mappedBy = "parent",cascade  = CascadeType.ALL)
+    @OneToMany(mappedBy = "parent",cascade = CascadeType.ALL)
     private Set<AnnonceParent> annonceParents = new HashSet<>();
 }

@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
+import java.util.HashSet;
 import java.util.Set;
 
 @Getter
@@ -14,16 +15,18 @@ import java.util.Set;
 @FieldDefaults(level= AccessLevel.PRIVATE)
 
 @Entity
-public class Diplomebabysitter {
+public class Diplome {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private String Nomdiplom;
 
 
-    //hthya relation bin diplome w babysiter
 
-    @ManyToMany
-    Set<Babysitter> babysitters;
+    //hthya relation bin diplome w babysitter
+    @JsonIgnore
+    @ManyToMany(mappedBy = "diplomeBabysitter")
+    private Set<BabySitter> babySitters = new HashSet<>();
 
 
 }

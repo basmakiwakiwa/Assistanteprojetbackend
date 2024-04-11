@@ -16,14 +16,18 @@ public class AnnonceParentControlleurs {
 
     // hthya methode mta3 methode ajoute annonce litab3a parent
 
-    @PostMapping(value ="/add")
-    public AnnonceParent AjouteAnnonceParent(@RequestBody AnnonceParent Annonce){
+    //LHNE bch namlou teste bch nchofo est ce que user etheke mawjoud ou nn
+    @PostMapping(value ="/add/{id}")
+    public AnnonceParent AjouteAnnonceParent(@PathVariable Long id ,  @RequestBody AnnonceParent Annonce){
 
-        return AnnonceParServ.createAnnonceParent(Annonce);
+        return AnnonceParServ.AjouteAnnonceParent(id,Annonce);
     }
 
 
+
+
     //hthya methode modifier par exemple nhb naml modif 3al annonnce eli 3maltha donnc hthya hya methode
+
     @PutMapping("/update/{idAnnonceParent}")
     public AnnonceParent updateAnnonce (@PathVariable Long idAnnonceParent , @RequestBody AnnonceParent Annonce)
     {
@@ -41,8 +45,10 @@ public class AnnonceParentControlleurs {
 
     //hthya bch tafichiliannonce eli a3mlthom el koul
 
+
+
     @GetMapping("/afficheAnnonce")
-    public List<AnnonceParent> getAllPosts()
+    public List<AnnonceParent> getAllAnnonce()
     {
         return AnnonceParServ.getAllAnnonceParent();
     }

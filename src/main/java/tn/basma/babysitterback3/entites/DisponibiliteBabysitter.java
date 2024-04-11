@@ -4,8 +4,8 @@ import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
-import java.util.Set;
 
+@EqualsAndHashCode
 @Getter
 @Setter
 @AllArgsConstructor
@@ -13,17 +13,17 @@ import java.util.Set;
 @FieldDefaults(level= AccessLevel.PRIVATE)
 
 @Entity
-public class competence {
+public class DisponibiliteBabysitter {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 
-    private Long id;
-    private  String nomComp;
-
-//hthya relation bin comp wel babysittr
-    @ManyToMany
-    Set<Babysitter> babysitters;
+    private Long idDispo;
 
 
+//lhne ene bch naml relation binn baby sitter wel disponibilite
+
+    @OneToOne
+
+    private BabySitter Babysitter;
 
 }

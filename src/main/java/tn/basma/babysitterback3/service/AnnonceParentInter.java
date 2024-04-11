@@ -8,8 +8,9 @@ public interface AnnonceParentInter {
     // hthya signature mta3 methode ajoute annonce litab3a parent par exemple bch nchoffa kn parent mawjoud ynajm yhabt annonce w kn mch mawjoud msajl mynajmch yhbt
 
 
-    public AnnonceParent createAnnonceParent(AnnonceParent Annonce);
+    public AnnonceParent AjouteAnnonceParent(Long id,AnnonceParent Annonce);
 
+    List< AnnonceParent > getAllAnnonceParent ();
 
 
 
@@ -21,7 +22,6 @@ public interface AnnonceParentInter {
 
     public void deleteAnnonce(Long iduser);
 
-    //hthya bch tafichili annonce eli a3mlthom el koul
-    List< AnnonceParent > getAllAnnonceParent ();
+
 
 }

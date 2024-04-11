@@ -3,7 +3,9 @@ package tn.basma.babysitterback3.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tn.basma.babysitterback3.entites.AnnonceParent;
+import tn.basma.babysitterback3.entites.Parent;
 import tn.basma.babysitterback3.repositories.AnnonceParentRepository;
+import tn.basma.babysitterback3.repositories.ParentRepo;
 
 import java.util.List;
 @Service
@@ -11,17 +13,37 @@ public class AnnonceParents  implements AnnonceParentInter{
     @Autowired
 
     private AnnonceParentRepository AnnonceParRep;
+    @Autowired
+    private ParentRepo parentRepo;
 
     // hthya methode mta3 methode ajoute annonce litab3a parent
     //bch ntastou kn parent mawjoud fil base de donne ynajm yaml annonnce w kn mch mawjoud maynjmch
     //hthya manjam namlha kn ki naml relation mabin annonnce wel parent
 
     @Override
-    public AnnonceParent createAnnonceParent(AnnonceParent Annonce) {
+    public AnnonceParent AjouteAnnonceParent(Long id ,AnnonceParent Annonce) {
+        Parent parent = parentRepo.getParentById(id);
+        if (parent!=null)
+        {
+            Annonce.setParent(parent);
+            return AnnonceParRep.save(Annonce);
+        }else{
 
+            throw new IllegalArgumentException("Parent not found");
 
-        return AnnonceParRep.save(Annonce);
     }
+
+    }
+
+
+
+
+
+
+
+
+
+
 
 
     //hthya methode modifier par exemple nhb naml modif 3al annonnce eli 3maltha donnc hthya hya methode
