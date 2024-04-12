@@ -45,5 +45,16 @@ public class BabySitter extends User {
     private Set<Diplome> diplomeBabysitter ;
 
 
+    //hthya relationmanytomany m3a competance
+
+    @JsonIgnore
+    @ManyToMany
+    @JoinTable(name = "BabysitterCompetance", joinColumns =@JoinColumn(name = "id"),inverseJoinColumns = @JoinColumn(name = "idcompetance"))
+    private Set<Competence> competanceBabysitter ;
+
+
+
+
+
 
 }

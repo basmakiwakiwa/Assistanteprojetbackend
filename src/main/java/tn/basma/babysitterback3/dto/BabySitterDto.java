@@ -30,7 +30,7 @@ public class BabySitterDto extends RegisterRequest{
     private String  niveaudeetude;
 
     private List<Long> iddiplome;
-
+    private List<Long> idcompetance;
 
     public static BabySitter toEntity(BabySitterDto request) {
         return BabySitter.builder()

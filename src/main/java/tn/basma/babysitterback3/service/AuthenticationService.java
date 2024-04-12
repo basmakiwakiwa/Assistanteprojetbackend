@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import tn.basma.babysitterback3.dto.*;
 import tn.basma.babysitterback3.entites.*;
 import tn.basma.babysitterback3.listener.RegistrationCompleteEvent;
+import tn.basma.babysitterback3.repositories.CompetanceRepository;
 import tn.basma.babysitterback3.repositories.DiplomeRepository;
 import tn.basma.babysitterback3.repositories.TokenRepository;
 import tn.basma.babysitterback3.repositories.UserRepository;
@@ -35,6 +36,7 @@ public class AuthenticationService {
     private final ApplicationEventPublisher publisher;
 
     private  final DiplomeRepository diplomeRepository;
+    private  final CompetanceRepository competanceRepository;
 
     public Response register(RegisterRequest userRequest, final HttpServletRequest request) {
 
@@ -66,10 +68,10 @@ public class AuthenticationService {
             babySitter.setPassword(passwordEncoder.encode(babySitter.getPassword()));
             babySitter.setConfirmeMDP(passwordEncoder.encode(babySitter.getConfirmeMDP()));
             babySitter.setRole(Role.BABYSITTER);
-            //
+            //hthya tb3a liste diplome
             List<Long> strDiploms = ((BabySitterDto) userRequest).getIddiplome();
             Set<Diplome> diplomes = new HashSet<>();
-
+            if (strDiploms != null) {
                 strDiploms .forEach(id -> {
 
                     Diplome diplome = (Diplome) diplomeRepository.findById(id)
@@ -77,9 +79,28 @@ public class AuthenticationService {
                     diplomes.add(diplome);
 
                 });
+            }
+
+            //lhne takml fazet list diplome
             babySitter.setDiplomeBabysitter(diplomes);
 
 
+
+            //hthya liste mt3 compentonce
+            List<Long> strCompetance = ((BabySitterDto) userRequest).getIdcompetance();
+            Set<Competence> Compts = new HashSet<>();
+            if (strCompetance != null) {
+                strCompetance .forEach(id -> {
+
+                    Competence comp= (Competence) competanceRepository.findById(id)
+                            .orElseThrow(() -> new RuntimeException("Error: comptance is not found."));
+                    Compts.add(comp);
+
+                });
+            }
+
+            babySitter.setCompetanceBabysitter(Compts);
+//toufa lhne methode competance
 
 
             var saveUsers = repository.save(babySitter);
@@ -96,7 +117,7 @@ public class AuthenticationService {
 
 
 
-
+//hthya inscri parent
         if (userRequest instanceof ParentDto ) {
             user =new Parent();
             user = ParentDto.toEntity((ParentDto)userRequest);
@@ -113,6 +134,8 @@ public class AuthenticationService {
                     .build();
         }
 
+
+        //hthya inscri admin
         if (userRequest instanceof AdminDeto ) {
             user =new Admin();
             user = AdminDeto.toEntity((AdminDeto)userRequest);
