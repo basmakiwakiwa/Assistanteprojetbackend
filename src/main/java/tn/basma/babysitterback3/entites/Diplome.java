@@ -19,13 +19,13 @@ public class Diplome {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String Nomdiplom;
+    private String nomdiplom;
 
 
 
     //hthya relation bin diplome w babysitter
     @JsonIgnore
-    @ManyToMany(mappedBy = "diplomeBabysitter")
+    @ManyToMany(mappedBy = "diplomeBabysitter", cascade = CascadeType.ALL)
     private Set<BabySitter> babySitters = new HashSet<>();
 
 
