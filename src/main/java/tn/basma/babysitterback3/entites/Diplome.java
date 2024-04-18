@@ -26,7 +26,7 @@ public class Diplome {
     //hthya relation bin diplome w babysitter
     @JsonIgnore
     @ManyToMany(mappedBy = "diplomeBabysitter", cascade = CascadeType.ALL)
-    private Set<BabySitter> babySitters = new HashSet<>();
+    private Set<auxiliairesdevie> babySitters = new HashSet<>();
 
 
 }

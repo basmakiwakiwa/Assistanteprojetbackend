@@ -3,7 +3,7 @@ package tn.basma.babysitterback3.dto;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import lombok.experimental.SuperBuilder;
-import tn.basma.babysitterback3.entites.BabySitter;
+import tn.basma.babysitterback3.entites.auxiliairesdevie;
 
 import java.util.Date;
 import java.util.List;
@@ -32,8 +32,8 @@ public class BabySitterDto extends RegisterRequest{
     private List<Long> iddiplome;
     private List<Long> idcompetance;
 
-    public static BabySitter toEntity(BabySitterDto request) {
-        return BabySitter.builder()
+    public static auxiliairesdevie toEntity(BabySitterDto request) {
+        return auxiliairesdevie.builder()
                 .nom(request.getNom())
                 .prenom(request.getPrenom())
                 .email(request.getEmail())

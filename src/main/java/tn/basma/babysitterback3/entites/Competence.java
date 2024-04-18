@@ -16,17 +16,20 @@ import java.util.Set;
 
 @Entity
 public class Competence {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    private String descompetence;
 
-    private Long idComp;
-    private  String nomComp;
 
-//hthya relation  manytomany bin comp wel babysitter
-
+    //hthya relation bin Competance w Assistante
     @JsonIgnore
-    @ManyToMany(mappedBy = "competanceBabysitter")
-    private Set<BabySitter> babySitters = new HashSet<>();
+    @ManyToMany(mappedBy = "CompetanceAuxiliairesdevie", cascade = CascadeType.ALL)
+    private Set<auxiliairesdevie> Auxiliairesdevies = new HashSet<>();
+
+
+
 
 
 }

@@ -24,6 +24,6 @@ public class DisponibiliteBabysitter {
 
     @OneToOne
 
-    private BabySitter Babysitter;
+    private auxiliairesdevie Babysitter;
 
 }

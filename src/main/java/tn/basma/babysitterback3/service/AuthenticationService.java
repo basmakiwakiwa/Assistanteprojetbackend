@@ -1,6 +1,7 @@
 package tn.basma.babysitterback3.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import jakarta.annotation.PostConstruct;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -8,12 +9,13 @@ import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import tn.basma.babysitterback3.dto.*;
 import tn.basma.babysitterback3.entites.*;
 import tn.basma.babysitterback3.listener.RegistrationCompleteEvent;
-import tn.basma.babysitterback3.repositories.CompetanceRepository;
+import tn.basma.babysitterback3.repositories.CompetenceRepository;
 import tn.basma.babysitterback3.repositories.DiplomeRepository;
 import tn.basma.babysitterback3.repositories.TokenRepository;
 import tn.basma.babysitterback3.repositories.UserRepository;
@@ -36,7 +38,7 @@ public class AuthenticationService {
     private final ApplicationEventPublisher publisher;
 
     private  final DiplomeRepository diplomeRepository;
-    private  final CompetanceRepository competanceRepository;
+    private  final CompetenceRepository competenceRepository;
 
     public Response register(RegisterRequest userRequest, final HttpServletRequest request) {
 
@@ -49,21 +51,11 @@ public class AuthenticationService {
                     .responseMessage("User with provided email  already exists!")
                     .build());
         }
-        /* var user = User.builder()
-                .nom(userRequest.getNom())
-                .prenom(userRequest.getPrenom())
-                .sexe(userRequest.getSexe())
-                .email(userRequest.getEmail())
-                .password(passwordEncoder.encode(userRequest.getPassword()))
-                .confirmeMDP(passwordEncoder.encode(userRequest.getConfirmeMDP()))
-                .role(Role.PARENT)
 
-                //.role(request.getRole())
-                .build();*/
         User user ;
         User savedUser = null ;
         if (userRequest instanceof BabySitterDto ) {
-            BabySitter babySitter =new BabySitter();
+            auxiliairesdevie babySitter =new auxiliairesdevie();
             babySitter = BabySitterDto.toEntity((BabySitterDto)userRequest);
             babySitter.setPassword(passwordEncoder.encode(babySitter.getPassword()));
             babySitter.setConfirmeMDP(passwordEncoder.encode(babySitter.getConfirmeMDP()));
@@ -81,25 +73,38 @@ public class AuthenticationService {
                 });
             }
 
-            //lhne takml fazet list diplome
             babySitter.setDiplomeBabysitter(diplomes);
 
-
-
-            //hthya liste mt3 compentonce
-            List<Long> strCompetance = ((BabySitterDto) userRequest).getIdcompetance();
-            Set<Competence> Compts = new HashSet<>();
+            //hthya tabda competance
+            List<Long> strCompetance = ((BabySitterDto) userRequest).getIddiplome();
+            Set<Competence> competences = new HashSet<>();
             if (strCompetance != null) {
                 strCompetance .forEach(id -> {
 
-                    Competence comp= (Competence) competanceRepository.findById(id)
-                            .orElseThrow(() -> new RuntimeException("Error: comptance is not found."));
-                    Compts.add(comp);
+                    Competence competence  = (Competence) competenceRepository.findById(id)
+                            .orElseThrow(() -> new RuntimeException("Error: diplome is not found."));
+                    competences.add(competence);
 
                 });
             }
 
-            babySitter.setCompetanceBabysitter(Compts);
+            babySitter.setCompetanceAuxiliairesdevie(competences);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 //toufa lhne methode competance
 
 
@@ -157,6 +162,13 @@ public class AuthenticationService {
 
 
     }
+
+
+
+
+
+
+
 
     public AuthenticationResponse authenticate(AuthenticationRequest request) {
         authenticationManager.authenticate(
@@ -226,5 +238,37 @@ public class AuthenticationService {
             }
         }
     }
+
+
+
+
+    @PostConstruct
+    public void createdefeultadm() {
+        Admin user =new  Admin();
+        User savedUser = null;
+        String email = "basmaAdmin@gmail.com";
+        if (!repository.existsByEmail(email)) {
+            user.setEmail("basmaAdmin@gmail.com");
+            user.setPassword(new BCryptPasswordEncoder().encode("admin"));
+            user.setConfirmeMDP(new BCryptPasswordEncoder().encode("admin"));
+            user.setSexe("famme");
+            user.setNom("Admin");
+            user.setPrenom("Admin");
+            user.setMobile(26278904);
+            user.setEnabled(true);
+            user.setRole(Role.ADMIN);
+            savedUser = repository.save((Admin) user);
+
+
+        }
+
+
+
+    }
+
+
+
+
+
 
 }

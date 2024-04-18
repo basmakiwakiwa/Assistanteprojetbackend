@@ -1,12 +1,15 @@
 package tn.basma.babysitterback3.controller;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import tn.basma.babysitterback3.entites.Diplome;
 import tn.basma.babysitterback3.service.DiplomeService;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/v1/diplomes")
@@ -15,49 +18,44 @@ public class DiplomeController {
     @Autowired
     private DiplomeService diplomeService;
 
-    // Endpoint to create a new diploma
-    @PostMapping
-    public Diplome createDiplome(@RequestBody Diplome diplome) {
-        return diplomeService.createDiplome(diplome);
+
+    @GetMapping("/all")
+    public ResponseEntity<List<Diplome>> getAllDiplomes() {
+        List<Diplome> diplomes = diplomeService.getAllDiplome();
+        return new ResponseEntity<>(diplomes, HttpStatus.OK);
     }
 
-    // Endpoint to retrieve a diploma by ID
+
     @GetMapping("/{id}")
-    public ResponseEntity<Diplome> getDiplomeById(@PathVariable Long id) {
-        Diplome diplome = diplomeService.getDiplomeById(id);
-        if (diplome != null) {
-            return ResponseEntity.ok(diplome);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+    public ResponseEntity<Diplome> getDiplomeById(@PathVariable("id") Long id) {
+        Optional<Diplome> activity = diplomeService.getDiplomeById(id);
+        return activity.map(value -> new ResponseEntity<>(value, HttpStatus.OK))
+                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
-    // Endpoint to update an existing diploma
+
+    @PostMapping
+    public ResponseEntity<Diplome> createDiplome(@RequestBody Diplome diplome) {
+        Diplome createdDiplome = diplomeService.createDiplome(diplome);
+        return new ResponseEntity<>(createdDiplome, HttpStatus.CREATED);
+    }
+
     @PutMapping("/{id}")
-    public ResponseEntity<Diplome> updateDiplome(@PathVariable Long id, @RequestBody Diplome updatedDiplome) {
-        updatedDiplome.setId(id); // Ensure the ID in the request body matches the path variable
-        Diplome diplome = diplomeService.updateDiplome(updatedDiplome);
-        if (diplome != null) {
-            return ResponseEntity.ok(diplome);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+    public ResponseEntity<Diplome> updateActivity(@PathVariable("id") Long id, @RequestBody Diplome diplome) {
+        Diplome updatedDiplome = diplomeService.updateDiplome(id, diplome);
+        return updatedDiplome != null ?
+                new ResponseEntity<>(updatedDiplome, HttpStatus.OK) :
+                new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    // Endpoint to delete a diploma by ID
+
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteDiplome(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteDiplome(@PathVariable("id") Long id) {
         diplomeService.deleteDiplome(id);
-        return ResponseEntity.noContent().build();
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    // Other endpoints as needed...
 
-    // Endpoint to get all diplomas
-    @GetMapping
-    public List<Diplome> getAllDiplomes() {
-        return diplomeService.getAllDiplomes();
-    }
 
 
 

@@ -6,6 +6,7 @@ import tn.basma.babysitterback3.entites.Diplome;
 import tn.basma.babysitterback3.repositories.DiplomeRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class DiplomeService {
@@ -13,37 +14,33 @@ public class DiplomeService {
     @Autowired
     private DiplomeRepository diplomeRepository;
 
-    // Method to create a new diploma
+
+
+    public List<Diplome> getAllDiplome() {
+        return diplomeRepository.findAll();
+    }
+
+
+    public Optional<Diplome> getDiplomeById(Long id) {
+        return diplomeRepository.findById(id);
+    }
+
     public Diplome createDiplome(Diplome diplome) {
-        return diplomeRepository.save(diplome);
+        return diplomeRepository.save( diplome);
     }
 
-    // Method to retrieve a diploma by ID
-    public Diplome getDiplomeById(Long id) {
-        return diplomeRepository.findById(id).orElse(null);
+    public Diplome updateDiplome(Long id, Diplome newDiplome) {
+        return diplomeRepository.findById(id).map( diplome -> {
+            diplome.setNomdiplom(newDiplome.getNomdiplom());
+            return diplomeRepository.save( diplome);
+        }).orElse(null);
     }
 
-    // Method to update an existing diploma
-    public Diplome updateDiplome(Diplome diplome) {
-        // Check if the diploma exists
-        if (diplome.getId() == null || !diplomeRepository.existsById(diplome.getId())) {
-            // Diploma doesn't exist
-            return null; // Or throw an exception
-        }
-        return diplomeRepository.save(diplome);
-    }
-
-    // Method to delete a diploma by ID
     public void deleteDiplome(Long id) {
         diplomeRepository.deleteById(id);
     }
 
 
 
-    // Method to get all diplomas
-    public List<Diplome> getAllDiplomes() {
-        return diplomeRepository.findAll();
-    }
-    // Other methods as needed...
 
 }
