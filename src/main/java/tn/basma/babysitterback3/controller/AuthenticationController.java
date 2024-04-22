@@ -29,7 +29,7 @@ public class AuthenticationController {
 
     @PostMapping("/register/babysitter")
     public Response register(
-            @RequestBody @Valid BabySitterDto userRequest,
+            @RequestBody @Valid auxiliairesdevieDto userRequest,
             HttpServletRequest request
     )  {
         return service.register(userRequest,request);
@@ -37,16 +37,6 @@ public class AuthenticationController {
 
     
 
-
-
-
-    @PostMapping("/register/Admin")
-    public Response register(
-            @RequestBody @Valid AdminDeto userRequest,
-            HttpServletRequest request
-    )  {
-        return service.register(userRequest,request);
-    }
 
     @PostMapping("/authenticate")
     public ResponseEntity<AuthenticationResponse> authenticate(

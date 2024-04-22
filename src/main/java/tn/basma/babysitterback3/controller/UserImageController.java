@@ -18,7 +18,7 @@ import java.util.zip.Deflater;
 import java.util.zip.Inflater;
 
 @RestController
-@RequestMapping("image")
+@RequestMapping("/api/v1/image")
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 public class UserImageController {
 

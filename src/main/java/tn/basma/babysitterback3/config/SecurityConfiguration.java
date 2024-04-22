@@ -24,6 +24,14 @@ public class SecurityConfiguration {
             "/api/v1/users/**",
             "/api/v1/diplomes/all",
             "/api/v1/competences/all",
+            "/api/v1/activities/all",
+
+
+            "/api/v1/image/upload/{idUser}",
+            "/api/v1/image/update/{idUser}",
+            "/api/v1/image/deleteImage/{idUser}",
+
+
             "/v2/api-docs",
             "/v3/api-docs",
             "/v3/api-docs/**",

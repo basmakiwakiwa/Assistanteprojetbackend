@@ -1,6 +1,8 @@
 package tn.basma.babysitterback3.entites;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -17,6 +19,7 @@ import java.util.Set;
 
 @Entity
 @DiscriminatorValue("babysitter")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 @SuperBuilder
 public class auxiliairesdevie extends User {
 
@@ -25,17 +28,16 @@ public class auxiliairesdevie extends User {
     private int     budget;
     private String  dispo;
     private String  langues;
-    private String  competences;
     private String  piecejustificative;
     private String  experience;
     private String  adresse;
-    private int     CIN;
+    private int     cin;
     private String  etatcivil;
     private String  niveaudeetude;
-
+   private String  image;
 
 //hthya relation bin baby siter w dispo
-
+@JsonIgnore
     @OneToOne(mappedBy = "Babysitter")
     private DisponibiliteBabysitter disponibilitebabysitter;
 
@@ -45,12 +47,21 @@ public class auxiliairesdevie extends User {
     private Set<Diplome> diplomeBabysitter ;
 
 
-//hthya relation bin comp w auxiliairesdevie
+    //hthya relation bin comp w auxiliairesdevie
 
     @JsonIgnore
     @ManyToMany
     @JoinTable(name = "AuxiliairesdevieCompetance")
     private Set<Competence> CompetanceAuxiliairesdevie;
+
+
+//hthya relation manytomany m3a activite
+    @JsonIgnore
+    @ManyToMany
+    @JoinTable(name = "AuxiliairesdevieActivites")
+    private Set<Activites> ActivitesAuxiliairesdevie;
+
+
 
 
 

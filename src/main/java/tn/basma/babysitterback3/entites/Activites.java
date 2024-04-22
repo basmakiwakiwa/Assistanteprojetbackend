@@ -1,11 +1,12 @@
 package tn.basma.babysitterback3.entites;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
+
+import java.util.HashSet;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -23,10 +24,16 @@ public class Activites {
     private String  description;
 
 
-
-
-
     //mezelet relation
+
+
+    //hthya relation bin Competance w Assistante
+    @JsonIgnore
+    @ManyToMany(mappedBy = "ActivitesAuxiliairesdevie", cascade = CascadeType.ALL)
+    private Set<auxiliairesdevie> Auxiliairesdeviess = new HashSet<>();
+
+
+
 }
 
 

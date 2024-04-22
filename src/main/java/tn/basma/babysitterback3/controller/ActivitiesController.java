@@ -18,7 +18,7 @@ public class ActivitiesController {
     @Autowired
     private ActivitiesService activitiesService;
 
-    @GetMapping
+    @GetMapping("/all")
     public ResponseEntity<List<Activites>> getAllActivities() {
         List<Activites> activities = activitiesService.getAllActivities();
         return new ResponseEntity<>(activities, HttpStatus.OK);

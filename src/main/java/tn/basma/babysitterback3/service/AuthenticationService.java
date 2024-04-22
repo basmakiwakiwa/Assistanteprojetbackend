@@ -15,10 +15,7 @@ import org.springframework.stereotype.Service;
 import tn.basma.babysitterback3.dto.*;
 import tn.basma.babysitterback3.entites.*;
 import tn.basma.babysitterback3.listener.RegistrationCompleteEvent;
-import tn.basma.babysitterback3.repositories.CompetenceRepository;
-import tn.basma.babysitterback3.repositories.DiplomeRepository;
-import tn.basma.babysitterback3.repositories.TokenRepository;
-import tn.basma.babysitterback3.repositories.UserRepository;
+import tn.basma.babysitterback3.repositories.*;
 
 import java.io.IOException;
 import java.util.HashSet;
@@ -39,6 +36,7 @@ public class AuthenticationService {
 
     private  final DiplomeRepository diplomeRepository;
     private  final CompetenceRepository competenceRepository;
+private  final ActivitesRepository activitesRepository;
 
     public Response register(RegisterRequest userRequest, final HttpServletRequest request) {
 
@@ -54,14 +52,15 @@ public class AuthenticationService {
 
         User user ;
         User savedUser = null ;
-        if (userRequest instanceof BabySitterDto ) {
+        if (userRequest instanceof auxiliairesdevieDto) {
             auxiliairesdevie babySitter =new auxiliairesdevie();
-            babySitter = BabySitterDto.toEntity((BabySitterDto)userRequest);
+            babySitter = auxiliairesdevieDto.toEntity((auxiliairesdevieDto)userRequest);
             babySitter.setPassword(passwordEncoder.encode(babySitter.getPassword()));
             babySitter.setConfirmeMDP(passwordEncoder.encode(babySitter.getConfirmeMDP()));
-            babySitter.setRole(Role.BABYSITTER);
-            //hthya tb3a liste diplome
-            List<Long> strDiploms = ((BabySitterDto) userRequest).getIddiplome();
+            babySitter.setRole(Role.Assistante);
+
+
+            List<Long> strDiploms = ((auxiliairesdevieDto) userRequest).getIddiplome();
             Set<Diplome> diplomes = new HashSet<>();
             if (strDiploms != null) {
                 strDiploms .forEach(id -> {
@@ -76,13 +75,13 @@ public class AuthenticationService {
             babySitter.setDiplomeBabysitter(diplomes);
 
             //hthya tabda competance
-            List<Long> strCompetance = ((BabySitterDto) userRequest).getIddiplome();
+            List<Long> strCompetance = ((auxiliairesdevieDto) userRequest).getIdcompetance();
             Set<Competence> competences = new HashSet<>();
             if (strCompetance != null) {
                 strCompetance .forEach(id -> {
 
                     Competence competence  = (Competence) competenceRepository.findById(id)
-                            .orElseThrow(() -> new RuntimeException("Error: diplome is not found."));
+                            .orElseThrow(() -> new RuntimeException("Error: competance is not found."));
                     competences.add(competence);
 
                 });
@@ -91,7 +90,20 @@ public class AuthenticationService {
             babySitter.setCompetanceAuxiliairesdevie(competences);
 
 
+            //hthya tabda Activite
+            List<Long> strActivites = ((auxiliairesdevieDto) userRequest).getIdActivite();
+            Set<Activites> activites = new HashSet<>();
+            if (strActivites  != null) {
+                strActivites  .forEach(id -> {
 
+                    Activites activite   = (Activites) activitesRepository.findById(id)
+                            .orElseThrow(() -> new RuntimeException("Error: Activite is not found."));
+                    activites.add(activite);
+
+                });
+            }
+
+            babySitter.setActivitesAuxiliairesdevie(activites);
 
 
 
@@ -141,22 +153,7 @@ public class AuthenticationService {
 
 
         //hthya inscri admin
-        if (userRequest instanceof AdminDeto ) {
-            user =new Admin();
-            user = AdminDeto.toEntity((AdminDeto)userRequest);
-            user.setPassword(passwordEncoder.encode(user.getPassword()));
-            user.setConfirmeMDP(passwordEncoder.encode(user.getConfirmeMDP()));
-            user.setRole(Role.ADMIN);
-            var saveUsers = repository.save(user);
 
-            publisher.publishEvent(new RegistrationCompleteEvent(saveUsers, applicationUrl(request)));
-            repository.save(user);
-
-            return Response.builder()
-                    .responseMessage("register")
-                    .email(user.getEmail())
-                    .build();
-        }
 
         return null;
 
@@ -241,14 +238,14 @@ public class AuthenticationService {
 
 
 
-
+//hthya inscri mta3 adminn par defaut
     @PostConstruct
     public void createdefeultadm() {
         Admin user =new  Admin();
         User savedUser = null;
-        String email = "basmaAdmin@gmail.com";
+        String email = "kiwakiwa903@gmail.com";
         if (!repository.existsByEmail(email)) {
-            user.setEmail("basmaAdmin@gmail.com");
+            user.setEmail("kiwakiwa903@gmail.com");
             user.setPassword(new BCryptPasswordEncoder().encode("admin"));
             user.setConfirmeMDP(new BCryptPasswordEncoder().encode("admin"));
             user.setSexe("famme");
