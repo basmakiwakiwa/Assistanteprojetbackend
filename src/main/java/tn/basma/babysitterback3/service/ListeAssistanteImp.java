@@ -6,6 +6,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import tn.basma.babysitterback3.entites.auxiliairesdevie;
 import tn.basma.babysitterback3.repositories.AssistanteRepo;
+import tn.basma.babysitterback3.repositories.DiplomeRepository;
 
 import java.util.List;
 
@@ -17,7 +18,7 @@ public class ListeAssistanteImp implements  ListeAssistante{
     @Autowired
     private AssistanteRepo assistanteRepo;
     private final PasswordEncoder passwordEncoder;
-
+    private DiplomeRepository diplomeRepository;
 
     @Override
     public void deleteauxiliairesdevie(Long iduser) {

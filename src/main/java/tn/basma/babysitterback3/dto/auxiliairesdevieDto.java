@@ -29,9 +29,11 @@ public class auxiliairesdevieDto extends RegisterRequest{
     private String  etatcivil;
     private String  niveaudeetude;
     private String  image;
+
     private List<Long> iddiplome;
     private List<Long> idcompetance;
     private List<Long> idActivite;
+
 
     public static auxiliairesdevie toEntity(auxiliairesdevieDto request) {
         return auxiliairesdevie.builder()
@@ -49,12 +51,19 @@ public class auxiliairesdevieDto extends RegisterRequest{
                 .dispo(request.getDispo())
                 .langues(request.getLangues())
 
+
+
+
+
+
                 .piecejustificative(request.getPiecejustificative())
                 .experience(request.getExperience())
                 .adresse(request.getAdresse())
                 .cin(request.getCin())
                 .etatcivil(request.getEtatcivil())
                 .niveaudeetude(request.getNiveaudeetude())
+
+
 
                 .role(request.getRole())
 
