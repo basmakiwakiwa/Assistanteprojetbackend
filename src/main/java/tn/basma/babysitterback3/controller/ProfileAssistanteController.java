@@ -6,7 +6,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import tn.basma.babysitterback3.entites.auxiliairesdevie;
 import tn.basma.babysitterback3.service.DiplomeService;
-import tn.basma.babysitterback3.service.PreofileAssistanteImp;
+import tn.basma.babysitterback3.service.ProfileAssistanteImp;
 
 import java.util.Optional;
 
@@ -17,52 +17,45 @@ import java.util.Optional;
 public class ProfileAssistanteController {
 
     @Autowired
-    PreofileAssistanteImp preofileAssistanteImp ;
+    ProfileAssistanteImp profileAssistanteImp ;
 
     private DiplomeService diplomeService;
     private final PasswordEncoder passwordEncoder;
 
-    //hthya methode mta3 affiche parent par email
+    //hthya methode mta3 affiche profile mta3 assistante par email
     @GetMapping(value = "/Assistante/{email}")
     public Optional<auxiliairesdevie> getauxiliairesdevie(@PathVariable String email) {
 
-        return preofileAssistanteImp.getauxiliairesdevie(email);
+        return profileAssistanteImp.getauxiliairesdevie(email);
 
     }
 
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    //hthya methoode modifier les information de profile  parent
+//hthya methoode modifier les information de profile  parent
     @PostMapping(value = "/ProfileAssistante")
     public boolean updateAssistante(@RequestBody auxiliairesdevie updatedAssistante) {
-        Optional<auxiliairesdevie> optionalAssistante = preofileAssistanteImp.getauxiliairesdevie(updatedAssistante.getEmail());
+        Optional<auxiliairesdevie> optionalAssistante = profileAssistanteImp.getauxiliairesdevie(updatedAssistante.getEmail());
         if (optionalAssistante.isPresent()) {
             auxiliairesdevie auxiliairesdevies = optionalAssistante.get();
+
             auxiliairesdevies.setNom(updatedAssistante.getNom());
             auxiliairesdevies.setPrenom(updatedAssistante.getPrenom());
             auxiliairesdevies.setEmail(updatedAssistante.getEmail());
             auxiliairesdevies.setMobile(updatedAssistante.getMobile());
             auxiliairesdevies.setSexe(updatedAssistante.getSexe());
             auxiliairesdevies.setAdresse(updatedAssistante.getAdresse());
-
-
-            preofileAssistanteImp.saveauxiliairesdevie(auxiliairesdevies);
+            auxiliairesdevies.setDescription(updatedAssistante.getDescription());
+            auxiliairesdevies.setDateN(updatedAssistante.getDateN());
+            auxiliairesdevies.setBudget(updatedAssistante.getBudget());
+            auxiliairesdevies.setLangues(updatedAssistante.getLangues());
+            auxiliairesdevies.setNiveaudeetude(updatedAssistante.getNiveaudeetude());
+            auxiliairesdevies.setEtatcivil(updatedAssistante.getEtatcivil());
+            auxiliairesdevies.setDiplomeBabysitter(updatedAssistante.getDiplomeBabysitter());
+            auxiliairesdevies.setCompetanceAuxiliairesdevie(updatedAssistante.getCompetanceAuxiliairesdevie());
+            auxiliairesdevies.setActivitesAuxiliairesdevie(updatedAssistante.getActivitesAuxiliairesdevie());
+            profileAssistanteImp.saveauxiliairesdevie(auxiliairesdevies);
             return true;
         } else {
             return false;

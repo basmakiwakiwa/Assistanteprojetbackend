@@ -28,7 +28,6 @@ public class ProfileParentControlleur {
     }
 
 
-
 //hthya methoode modifier les information de profile  parent
     @PostMapping(value = "/Profileparent")
     public boolean updateParent(@RequestBody Parent updatedParent) {

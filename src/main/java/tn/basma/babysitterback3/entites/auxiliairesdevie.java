@@ -37,10 +37,7 @@ public class auxiliairesdevie extends User {
 
 
 
-//hthya relation bin baby siter w dispo
 
-    @OneToOne(mappedBy = "Babysitter")
-    private DisponibiliteBabysitter disponibilitebabysitter;
 
 
     @ManyToMany

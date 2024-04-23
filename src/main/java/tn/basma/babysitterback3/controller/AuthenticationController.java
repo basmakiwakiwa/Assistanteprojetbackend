@@ -27,7 +27,7 @@ public class AuthenticationController {
     }
 
 
-    @PostMapping("/register/babysitter")
+    @PostMapping("/register/assistante")
     public Response register(
             @RequestBody @Valid auxiliairesdevieDto userRequest,
             HttpServletRequest request
