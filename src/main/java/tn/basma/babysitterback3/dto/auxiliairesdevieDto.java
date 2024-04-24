@@ -51,17 +51,18 @@ public class auxiliairesdevieDto extends RegisterRequest{
                 .dispo(request.getDispo())
                 .langues(request.getLangues())
 
-
-
-
-
-
                 .piecejustificative(request.getPiecejustificative())
                 .experience(request.getExperience())
                 .adresse(request.getAdresse())
                 .cin(request.getCin())
                 .etatcivil(request.getEtatcivil())
                 .niveaudeetude(request.getNiveaudeetude())
+
+
+                .iddiplome(request.getIddiplome())
+                .idcompetance(request.getIdcompetance())
+                .idActivite(request.getIdActivite())
+
 
 
 

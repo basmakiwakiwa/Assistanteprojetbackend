@@ -8,6 +8,7 @@ import lombok.experimental.FieldDefaults;
 import lombok.experimental.SuperBuilder;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 @Getter
@@ -35,7 +36,9 @@ public class auxiliairesdevie extends User {
     private String  niveaudeetude;
     private String  image;
 
-
+    private List<Long> iddiplome;
+    private List<Long> idcompetance;
+    private List<Long> idActivite;
 
 
 
@@ -58,10 +61,6 @@ public class auxiliairesdevie extends User {
     @ManyToMany
     @JoinTable(name = "AuxiliairesdevieActivites")
     private Set<Activites> ActivitesAuxiliairesdevie;
-
-
-
-
 
 
 

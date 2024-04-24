@@ -34,6 +34,7 @@ public class ProfileParentControlleur {
         Optional<Parent> optionalParent = profileParentServiceimpl.getParent(updatedParent.getEmail());
         if (optionalParent.isPresent()) {
             Parent parent = optionalParent.get();
+
             parent.setNom(updatedParent.getNom());
             parent.setPrenom(updatedParent.getPrenom());
             parent.setEmail(updatedParent.getEmail());
