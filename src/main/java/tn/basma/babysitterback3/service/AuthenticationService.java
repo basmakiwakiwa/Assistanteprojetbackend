@@ -140,7 +140,7 @@ private  final ActivitesRepository activitesRepository;
             user = ParentDto.toEntity((ParentDto)userRequest);
             user.setPassword(passwordEncoder.encode(user.getPassword()));
             user.setConfirmeMDP(passwordEncoder.encode(user.getConfirmeMDP()));
-            user.setRole(Role.PARENT);
+            user.setRole(Role.Parent);
             var saveUsers = repository.save(user);
 
             publisher.publishEvent(new RegistrationCompleteEvent(saveUsers, applicationUrl(request)));
@@ -176,6 +176,7 @@ private  final ActivitesRepository activitesRepository;
         );
         var user = repository.findByEmail(request.getEmail())
                 .orElseThrow();
+        var role= user.getRole().toString();
         var jwtToken = jwtService.generateToken(user);
         var refreshToken = jwtService.generateRefreshToken(user);
         revokeAllUserTokens(user);
@@ -183,6 +184,7 @@ private  final ActivitesRepository activitesRepository;
         return AuthenticationResponse.builder()
                 .accessToken(jwtToken)
                 .refreshToken(refreshToken)
+                .role(role)
                 .build();
     }
 

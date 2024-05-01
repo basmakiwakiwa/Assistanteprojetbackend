@@ -17,10 +17,10 @@ public class ListeAssistanteController {
     ListeAssistanteImp listeAssistanteserv;
 
 
-    @DeleteMapping(value="/deleteuser/{user_id}")
-    public void deleteauxiliairesdevie(@PathVariable Long user_id)
+    @DeleteMapping(value="/deleteuser/{userid}")
+    public void deleteauxiliairesdevie(@PathVariable Long userid)
     {
-        listeAssistanteserv.deleteauxiliairesdevie(user_id);
+        listeAssistanteserv.deleteauxiliairesdevie(userid);
     }
 
 

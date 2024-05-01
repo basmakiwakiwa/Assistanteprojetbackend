@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class AuthenticationResponse {
-
+    private String role;
     //hthye yraj3li response mta3 tokenn
 
     @JsonProperty("access_token")

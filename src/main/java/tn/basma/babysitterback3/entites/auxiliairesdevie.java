@@ -35,7 +35,6 @@ public class auxiliairesdevie extends User {
     private String  etatcivil;
     private String  niveaudeetude;
     private String  image;
-
     private List<Long> iddiplome;
     private List<Long> idcompetance;
     private List<Long> idActivite;

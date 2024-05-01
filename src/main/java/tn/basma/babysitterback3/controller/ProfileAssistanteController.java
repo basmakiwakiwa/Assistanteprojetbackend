@@ -2,7 +2,6 @@ package tn.basma.babysitterback3.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import tn.basma.babysitterback3.entites.Activites;
 import tn.basma.babysitterback3.entites.Competence;
@@ -13,6 +12,7 @@ import tn.basma.babysitterback3.repositories.CompetenceRepository;
 import tn.basma.babysitterback3.repositories.DiplomeRepository;
 import tn.basma.babysitterback3.service.ProfileAssistanteImp;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -41,10 +41,10 @@ private  final CompetenceRepository  competenceRepository;
     }
 
 
-    @PutMapping("/Assistante/{email}")
-    public ResponseEntity<String> modifierAuxiliaireDeVie(@PathVariable String email, @RequestBody auxiliairesdevie auxiliaireDeVieModifie) {
+    @PutMapping("/Assistante/{id}")
+    public boolean modifierAuxiliaireDeVie( @PathVariable String id,  @RequestBody auxiliairesdevie auxiliaireDeVieModifie) {
         // Récupérez l'auxiliaire de vie à modifier
-        Optional<auxiliairesdevie> auxiliaireDeVieOptional = profileAssistanteImp.getauxiliairesdevie(email);
+        Optional<auxiliairesdevie> auxiliaireDeVieOptional = profileAssistanteImp.getauxiliairesdevie(auxiliaireDeVieModifie.getEmail());
 
         if (auxiliaireDeVieOptional.isPresent()) {
             auxiliairesdevie auxiliaireDeVie = auxiliaireDeVieOptional.get();
@@ -61,11 +61,33 @@ private  final CompetenceRepository  competenceRepository;
             auxiliaireDeVie.setLangues(auxiliaireDeVieModifie.getLangues());
             auxiliaireDeVie.setAdresse(auxiliaireDeVieModifie.getAdresse());
             auxiliaireDeVie.setCin(auxiliaireDeVieModifie.getCin());
+            auxiliaireDeVie.setExperience(auxiliaireDeVieModifie.getExperience());
             auxiliaireDeVie.setEtatcivil(auxiliaireDeVieModifie.getEtatcivil());
             auxiliaireDeVie.setNiveaudeetude(auxiliaireDeVieModifie.getNiveaudeetude());
-//hthya code mta3 diplome ki nhb namlou modifier 5atrou liste 5atr amltou kima lokhrinn mahabch
 
             if (auxiliaireDeVieModifie.getIddiplome() != null) {
+                Set<Diplome> diplomesActuels = auxiliaireDeVie.getDiplomeBabysitter();
+                List<Long> nouveauxIdsDiplomes = auxiliaireDeVieModifie.getIddiplome();
+
+                // Remove diplomas that are not in the new list
+                diplomesActuels.removeIf(diplome -> !nouveauxIdsDiplomes.contains(diplome.getId()));
+
+                // Add new diplomas from the new list
+                for (Long idDiplome : nouveauxIdsDiplomes) {
+                    if (diplomesActuels.stream().noneMatch(diplome -> diplome.getId().equals(idDiplome))) {
+                        Diplome diplome = diplomeRepository.findById(idDiplome)
+                                .orElseThrow(() -> new IllegalArgumentException("Diplome non trouvé pour l'ID: " + idDiplome));
+                        diplomesActuels.add(diplome);
+                    }
+                }
+            }
+
+
+            //hthya code mta3 diplome ki nhb namlou modifier 5atrou liste 5atr amltou kima lokhrinn mahabch
+
+
+
+            /*if (auxiliaireDeVieModifie.getIddiplome() != null) {
                 Set<Diplome> diplomes = auxiliaireDeVie.getDiplomeBabysitter();
                 diplomes.clear();
                 for (Long idDiplome : auxiliaireDeVieModifie.getIddiplome()) {
@@ -73,7 +95,9 @@ private  final CompetenceRepository  competenceRepository;
                             .orElseThrow(() -> new IllegalArgumentException("Diplome non trouvé pour l'ID: " + idDiplome));
                     diplomes.add(diplome);
                 }
-            }
+            }*/
+
+
 
             if (auxiliaireDeVieModifie.getIdcompetance() != null) {
                 Set<Competence> competences = auxiliaireDeVie.getCompetanceAuxiliairesdevie();
@@ -99,9 +123,9 @@ private  final CompetenceRepository  competenceRepository;
             // Sauvegardez les modifications
             profileAssistanteImp.saveauxiliairesdevie(auxiliaireDeVie);
 
-            return ResponseEntity.ok("Auxiliaire de vie modifié avec succès.");
+            return true;
         } else {
-            return ResponseEntity.notFound().build();
+            return false;
         }
     }
 

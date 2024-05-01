@@ -2,9 +2,7 @@ package tn.basma.babysitterback3.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import tn.basma.babysitterback3.dto.ParentDto;
 import tn.basma.babysitterback3.entites.Parent;
-import tn.basma.babysitterback3.entites.User;
 import tn.basma.babysitterback3.service.ListeParent;
 
 import java.util.List;
@@ -39,8 +37,6 @@ public class ListeParentControlleur {
     {
        return  listParentServ.updateParent(user_id,parent);
     }
-
-
 
 
 }

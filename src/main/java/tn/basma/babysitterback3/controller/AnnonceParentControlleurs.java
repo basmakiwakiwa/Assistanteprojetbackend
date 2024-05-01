@@ -7,7 +7,7 @@ import tn.basma.babysitterback3.service.AnnonceParents;
 
 import java.util.List;
 
-@RequestMapping("/parentAnnonce")
+@RequestMapping("/api/v1/parentAnnonce")
 
 @RestController
 public class AnnonceParentControlleurs {

@@ -13,6 +13,7 @@ import java.util.Date;
 @NoArgsConstructor
 @FieldDefaults(level= AccessLevel.PRIVATE)
 @Entity
+
 public class AnnonceParent {
 
     //IDENTITY manha a chaque fois bch yatik valeur 1.2.3..
@@ -32,7 +33,7 @@ public class AnnonceParent {
     private String emplacement;
     private String languesparlees;
     private int agedesenfants;
-    private String caracteristiquesdesenfants;
+
 
 
 
@@ -45,8 +46,22 @@ public class AnnonceParent {
     //bhy alch nista3mlou fha nista3mlou faha khter ahna par exemple fil diagramme de classe mta3na 3ana parent bhy awel haja najmou nista3mlouha kima mnjmouch
     //@JoinColumn(name="parent_id") lhne 7atina id mta3 parent eli inserha donc fil base de donne bch ywali 3ana attribute parent_id hwa parent eli inserha
 
-@JsonIgnore
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "parent_id")
     private Parent parent;
+
+
+
+
+
+
+
+
+
+
 }
+
+
+
+

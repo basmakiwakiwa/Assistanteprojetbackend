@@ -64,7 +64,6 @@ public class AnnonceParents  implements AnnonceParentInter{
             existingAnnonce.setAgedesenfants(Annonce.getAgedesenfants());
 
 
-            existingAnnonce.setCaracteristiquesdesenfants(Annonce.getCaracteristiquesdesenfants());
 
 
 

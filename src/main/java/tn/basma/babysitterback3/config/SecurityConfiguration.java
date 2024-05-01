@@ -27,6 +27,7 @@ public class SecurityConfiguration {
             "/api/v1/activities/all",
 
 
+
             "/api/v1/image/upload/{idUser}",
             "/api/v1/image/update/{idUser}",
             "/api/v1/image/deleteImage/{idUser}",
