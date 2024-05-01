@@ -53,8 +53,11 @@ public class AnnonceParent {
 
 
 
+//relation activite et annonce
 
-
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "activite_id")
+    private Activites activites;
 
 
 

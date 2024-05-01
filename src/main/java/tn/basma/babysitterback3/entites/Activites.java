@@ -33,8 +33,10 @@ public class Activites {
     private Set<auxiliairesdevie> Auxiliairesdeviess = new HashSet<>();
 
 
-
-
+//hthya relation bin annonce wel activite
+    @JsonIgnore
+    @OneToMany(mappedBy = "activites",cascade = CascadeType.ALL)
+    private Set<AnnonceParent> annonceParentss = new HashSet<>();
 
 
 
