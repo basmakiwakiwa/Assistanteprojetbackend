@@ -59,7 +59,7 @@ public class auxiliairesdevie extends User {
 
     @ManyToMany
     @JoinTable(name = "AuxiliairesdevieActivites")
-    private Set<Activites> ActivitesAuxiliairesdevie;
+    private Set<Services> ActivitesAuxiliairesdevie;
 
 
 

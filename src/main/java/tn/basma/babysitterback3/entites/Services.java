@@ -15,7 +15,7 @@ import java.util.Set;
 @FieldDefaults(level= AccessLevel.PRIVATE)
 
 @Entity
-public class Activites {
+public class Services {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

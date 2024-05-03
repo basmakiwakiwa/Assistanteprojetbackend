@@ -11,6 +11,7 @@ import java.util.Date;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 @FieldDefaults(level= AccessLevel.PRIVATE)
 @Entity
 
@@ -57,7 +58,7 @@ public class AnnonceParent {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "activite_id")
-    private Activites activites;
+    private Services activites;
 
 
 

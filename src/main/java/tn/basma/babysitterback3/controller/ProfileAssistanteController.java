@@ -3,11 +3,11 @@ package tn.basma.babysitterback3.controller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import tn.basma.babysitterback3.entites.Activites;
+import tn.basma.babysitterback3.entites.Services;
 import tn.basma.babysitterback3.entites.Competence;
 import tn.basma.babysitterback3.entites.Diplome;
 import tn.basma.babysitterback3.entites.auxiliairesdevie;
-import tn.basma.babysitterback3.repositories.ActivitesRepository;
+import tn.basma.babysitterback3.repositories.ServiceAssistanteRepository;
 import tn.basma.babysitterback3.repositories.CompetenceRepository;
 import tn.basma.babysitterback3.repositories.DiplomeRepository;
 import tn.basma.babysitterback3.service.ProfileAssistanteImp;
@@ -28,7 +28,7 @@ public class ProfileAssistanteController {
 
 
     private  final DiplomeRepository diplomeRepository;
-private  final ActivitesRepository activitesRepository ;
+private  final ServiceAssistanteRepository activitesRepository ;
 private  final CompetenceRepository  competenceRepository;
 
 
@@ -110,10 +110,10 @@ private  final CompetenceRepository  competenceRepository;
             }
 
             if (auxiliaireDeVieModifie.getIdActivite() != null) {
-                Set<Activites> activites = auxiliaireDeVie.getActivitesAuxiliairesdevie();
+                Set<Services> activites = auxiliaireDeVie.getActivitesAuxiliairesdevie();
                 activites.clear();
                 for (Long idActivite : auxiliaireDeVieModifie.getIdActivite()) {
-                    Activites activite = activitesRepository.findById(idActivite)
+                    Services activite = activitesRepository.findById(idActivite)
                             .orElseThrow(() -> new IllegalArgumentException("Activité non trouvée pour l'ID: " + idActivite));
                     activites.add(activite);
                 }

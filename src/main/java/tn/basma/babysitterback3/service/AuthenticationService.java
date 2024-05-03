@@ -36,7 +36,7 @@ public class AuthenticationService {
 
     private  final DiplomeRepository diplomeRepository;
     private  final CompetenceRepository competenceRepository;
-private  final ActivitesRepository activitesRepository;
+private  final ServiceAssistanteRepository activitesRepository;
 
     public Response register(RegisterRequest userRequest, final HttpServletRequest request) {
 
@@ -92,11 +92,11 @@ private  final ActivitesRepository activitesRepository;
 
             //hthya tabda Activite
             List<Long> strActivites = ((auxiliairesdevieDto) userRequest).getIdActivite();
-            Set<Activites> activites = new HashSet<>();
+            Set<Services> activites = new HashSet<>();
             if (strActivites  != null) {
                 strActivites  .forEach(id -> {
 
-                    Activites activite   = (Activites) activitesRepository.findById(id)
+                    Services activite   = (Services) activitesRepository.findById(id)
                             .orElseThrow(() -> new RuntimeException("Error: Activite is not found."));
                     activites.add(activite);
 

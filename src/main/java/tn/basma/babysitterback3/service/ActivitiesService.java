@@ -3,34 +3,34 @@ package tn.basma.babysitterback3.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import tn.basma.babysitterback3.entites.Activites;
-import tn.basma.babysitterback3.repositories.ActivitesRepository;
+import tn.basma.babysitterback3.entites.Services;
+import tn.basma.babysitterback3.repositories.ServiceAssistanteRepository;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
 public class ActivitiesService {
-
+//hthya 5as b mta3 admin crud 3adiin
     @Autowired
-    private ActivitesRepository activitiesRepository;
+    private ServiceAssistanteRepository activitiesRepository;
 
-    public List<Activites> getAllActivities() {
+    public List<Services> getAllActivities() {
         return activitiesRepository.findAll();
     }
 
-    public Optional<Activites> getActivityById(Long id) {
+    public Optional<Services> getActivityById(Long id) {
         return activitiesRepository.findById(id);
     }
 
-    public Activites createActivity(Activites activity) {
+    public Services createActivity(Services activity) {
         return activitiesRepository.save(activity);
     }
 
-    public Activites updateActivity(Long id, Activites newActivity) {
-        Optional<Activites> optionalActivity = activitiesRepository.findById(id);
+    public Services updateActivity(Long id, Services newActivity) {
+        Optional<Services> optionalActivity = activitiesRepository.findById(id);
         if (optionalActivity.isPresent()) {
-            Activites activity = optionalActivity.get();
+            Services activity = optionalActivity.get();
             activity.setDesignation(newActivity.getDesignation());
             activity.setDescription(newActivity.getDescription());
             return activitiesRepository.save(activity);

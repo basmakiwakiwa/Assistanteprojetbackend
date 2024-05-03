@@ -2,6 +2,7 @@ package tn.basma.babysitterback3.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import tn.basma.babysitterback3.dto.AnnonceDeto;
 import tn.basma.babysitterback3.entites.AnnonceParent;
 import tn.basma.babysitterback3.service.AnnonceParents;
 
@@ -12,13 +13,19 @@ import java.util.List;
 @RestController
 public class AnnonceParentControlleurs {
     @Autowired
+
     AnnonceParents AnnonceParServ;
+
+
+
+
+
 
     // hthya methode mta3 methode ajoute annonce litab3a parent
 
     //LHNE bch namlou teste bch nchofo est ce que user etheke mawjoud ou nn
     @PostMapping(value ="/add/{id}")
-    public AnnonceParent AjouteAnnonceParent(@PathVariable Long id ,  @RequestBody AnnonceParent Annonce){
+    public AnnonceParent AjouteAnnonceParent(@PathVariable Long id , @RequestBody AnnonceDeto Annonce){
 
         return AnnonceParServ.AjouteAnnonceParent(id,Annonce);
     }
@@ -52,5 +59,10 @@ public class AnnonceParentControlleurs {
     {
         return AnnonceParServ.getAllAnnonceParent();
     }
+
+
+
+
+
 
 }

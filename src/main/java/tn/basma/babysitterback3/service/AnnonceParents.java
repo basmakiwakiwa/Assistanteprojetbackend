@@ -2,10 +2,13 @@ package tn.basma.babysitterback3.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import tn.basma.babysitterback3.dto.AnnonceDeto;
 import tn.basma.babysitterback3.entites.AnnonceParent;
 import tn.basma.babysitterback3.entites.Parent;
+import tn.basma.babysitterback3.entites.Services;
 import tn.basma.babysitterback3.repositories.AnnonceParentRepository;
 import tn.basma.babysitterback3.repositories.ParentRepo;
+import tn.basma.babysitterback3.repositories.ServiceAssistanteRepository;
 
 import java.util.List;
 @Service
@@ -13,20 +16,25 @@ public class AnnonceParents  implements AnnonceParentInter{
     @Autowired
 
     private AnnonceParentRepository AnnonceParRep;
+
     @Autowired
     private ParentRepo parentRepo;
-
+    @Autowired
+    private ServiceAssistanteRepository serviceAssistanteRepository;
     // hthya methode mta3 methode ajoute annonce litab3a parent
     //bch ntastou kn parent mawjoud fil base de donne ynajm yaml annonnce w kn mch mawjoud maynjmch
     //hthya manjam namlha kn ki naml relation mabin annonnce wel parent
 
     @Override
-    public AnnonceParent AjouteAnnonceParent(Long id ,AnnonceParent Annonce) {
+    public AnnonceParent AjouteAnnonceParent(Long id , AnnonceDeto Annonce) {
         Parent parent = parentRepo.getParentById(id);
+        AnnonceParent annonceParent = AnnonceDeto.toEntity(Annonce);
+
+        Services services = serviceAssistanteRepository.findById(Annonce.getIdservice()).get();
         if (parent!=null)
-        {
-            Annonce.setParent(parent);
-            return AnnonceParRep.save(Annonce);
+        {    annonceParent.setActivites(services);
+            annonceParent.setParent(parent);
+            return AnnonceParRep.save(annonceParent);
         }else{
 
             throw new IllegalArgumentException("Parent not found");
