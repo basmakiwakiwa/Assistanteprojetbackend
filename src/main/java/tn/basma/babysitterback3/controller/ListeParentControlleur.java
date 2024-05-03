@@ -32,6 +32,9 @@ public class ListeParentControlleur {
         return  listParentServ.getAllParent();
     }
 
+
+
+
     @PutMapping(value="/updateuser/{user_id}")
     public Parent updateParent(@PathVariable Long user_id , Parent parent )
     {

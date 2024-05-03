@@ -10,19 +10,8 @@ public interface AnnonceParentInter {
 
 
     public AnnonceParent AjouteAnnonceParent(Long id , AnnonceDeto Annonce);
+    List<AnnonceParent> getAllAnnonce();
 
-    List< AnnonceParent > getAllAnnonceParent ();
-
-
-
-    //hthya methode modifier par exemple nhb naml modif 3al annonnce eli 3maltha donnc hthya hya methode
-
-    AnnonceParent updateAnnonce(Long idAnnonceParent, AnnonceParent Annonce);
-
-    //hthya methode supprimer Annonce mta3 parent
-
-    public void deleteAnnonce(Long iduser);
-
-
-
+    AnnonceParent modifierAnnonceParentByParentId(Long id, AnnonceDeto newAnnonce);
+    public void deleteAnnouncementForParentById(Long id, Long idAnnonceParent);
 }

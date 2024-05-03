@@ -2,7 +2,9 @@ package tn.basma.babysitterback3.dto;
 
 import lombok.*;
 import lombok.experimental.FieldDefaults;
+import org.springframework.beans.factory.annotation.Autowired;
 import tn.basma.babysitterback3.entites.AnnonceParent;
+import tn.basma.babysitterback3.repositories.ServiceAssistanteRepository;
 
 import java.util.Date;
 @Setter
@@ -24,11 +26,17 @@ public class AnnonceDeto {
     private String emplacement;
     private String languesparlees;
     private int agedesenfants;
+    private Long idservice;
 
 
-     private Long idservice;
+
+    @Autowired
+    private static ServiceAssistanteRepository serviceAssistanteRepository;
 
     public static AnnonceParent toEntity(AnnonceDeto request) {
+
+
+
         return AnnonceParent .builder()
                 .titreannonce(request.getTitreannonce())
                 .description(request.getDescription())
@@ -40,7 +48,9 @@ public class AnnonceDeto {
                 .languesparlees(request.getLanguesparlees())
                 .agedesenfants(request.getAgedesenfants())
 
-
                 .build();
     }
+
+
+
 }

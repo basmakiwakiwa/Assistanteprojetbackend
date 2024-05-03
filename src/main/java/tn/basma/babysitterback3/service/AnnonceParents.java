@@ -1,5 +1,6 @@
 package tn.basma.babysitterback3.service;
 
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tn.basma.babysitterback3.dto.AnnonceDeto;
@@ -11,16 +12,17 @@ import tn.basma.babysitterback3.repositories.ParentRepo;
 import tn.basma.babysitterback3.repositories.ServiceAssistanteRepository;
 
 import java.util.List;
+
 @Service
 public class AnnonceParents  implements AnnonceParentInter{
     @Autowired
-
     private AnnonceParentRepository AnnonceParRep;
 
     @Autowired
     private ParentRepo parentRepo;
     @Autowired
     private ServiceAssistanteRepository serviceAssistanteRepository;
+
     // hthya methode mta3 methode ajoute annonce litab3a parent
     //bch ntastou kn parent mawjoud fil base de donne ynajm yaml annonnce w kn mch mawjoud maynjmch
     //hthya manjam namlha kn ki naml relation mabin annonnce wel parent
@@ -44,59 +46,47 @@ public class AnnonceParents  implements AnnonceParentInter{
     }
 
 
-
-
-
-
-
-
-
-
-
-
-    //hthya methode modifier par exemple nhb naml modif 3al annonnce eli 3maltha donnc hthya hya methode
-    // tw nektbha detaille fil awra9
+    //methode get annonce
     @Override
-    public AnnonceParent updateAnnonce(Long idAnnonceParent, AnnonceParent Annonce) {
-        AnnonceParent existingAnnonce = AnnonceParRep.findById(idAnnonceParent).orElse(null);
-        if(existingAnnonce!=null)
-        {
-            existingAnnonce.setTitreannonce(Annonce.getTitreannonce());
-            existingAnnonce.setDescription(Annonce.getDescription());
-            existingAnnonce.setNombreEnfants(Annonce.getNombreEnfants());
-            existingAnnonce.setDatedebut(Annonce.getDatedebut());
-            existingAnnonce.setDatefin(Annonce.getDatefin());
-            existingAnnonce.setBudget(Annonce.getBudget());
-            existingAnnonce.setEmplacement(Annonce.getEmplacement());
-            existingAnnonce.setLanguesparlees(Annonce.getLanguesparlees());
-            existingAnnonce.setAgedesenfants(Annonce.getAgedesenfants());
-
-
-
-
-
-
-            return AnnonceParRep.save(existingAnnonce);
-        }
-
-        return null;
-    }
-
-    //hthya methode supprimer Annonce mta3 parent
-
-    @Override
-    public void deleteAnnonce(Long iduser) {
-        // TODO Auto-generated method stub
-        AnnonceParRep.deleteById(iduser);
-    }
-
-
-    //hthya bch tafichili annonce eli a3mlthom el koul
-
-    @Override
-    public List<AnnonceParent> getAllAnnonceParent() {
+    public List<AnnonceParent> getAllAnnonce() {
         return AnnonceParRep.findAll();
-
-
     }
+
+    //hthya methode modifier mta3 annonce w fi westha modifier mta3 service zede
+    @Override
+    public AnnonceParent modifierAnnonceParentByParentId(Long id, AnnonceDeto newAnnonce) {
+        // Trouver le parent par ID
+        Parent parent = parentRepo.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Parent not found"));
+
+        // Trouver l'annonce existante pour ce parent
+        AnnonceParent existingAnnonce = AnnonceParRep.findByParent(parent)
+                .orElseThrow(() -> new IllegalArgumentException("Announcement not found for this parent"));
+
+        // Mettre à jour l'annonce existante avec les nouveaux détails y compris activites
+        existingAnnonce.setTitreannonce(newAnnonce.getTitreannonce());
+        existingAnnonce.setDescription(newAnnonce.getDescription());
+        existingAnnonce.setNombreEnfants(newAnnonce.getNombreEnfants());
+        existingAnnonce.setDatedebut(newAnnonce.getDatedebut());
+        existingAnnonce.setDatefin(newAnnonce.getDatefin());
+        existingAnnonce.setBudget(newAnnonce.getBudget());
+        existingAnnonce.setEmplacement(newAnnonce.getEmplacement());
+        existingAnnonce.setLanguesparlees(newAnnonce.getLanguesparlees());
+        existingAnnonce.setAgedesenfants(newAnnonce.getAgedesenfants());
+
+        // Modifier les activités de l'annonce parent
+        //hthya modifier mta3 service fil annonce
+        Services services = serviceAssistanteRepository.findById(newAnnonce.getIdservice())
+                .orElseThrow(() -> new IllegalArgumentException("Services not found"));
+        existingAnnonce.setActivites(services);
+
+        return AnnonceParRep.save(existingAnnonce);
+    }
+
+    @Override
+    @Transactional // Add @Transactional annotation here
+    public void deleteAnnouncementForParentById(Long id, Long idAnnonceParent) {
+        AnnonceParRep.deleteByIdAnnonceParentAndParentId(idAnnonceParent, id);
+    }
+
 }

@@ -1,6 +1,7 @@
 package tn.basma.babysitterback3.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import tn.basma.babysitterback3.dto.AnnonceDeto;
 import tn.basma.babysitterback3.entites.AnnonceParent;
@@ -17,10 +18,6 @@ public class AnnonceParentControlleurs {
     AnnonceParents AnnonceParServ;
 
 
-
-
-
-
     // hthya methode mta3 methode ajoute annonce litab3a parent
 
     //LHNE bch namlou teste bch nchofo est ce que user etheke mawjoud ou nn
@@ -32,37 +29,25 @@ public class AnnonceParentControlleurs {
 
 
 
-
-    //hthya methode modifier par exemple nhb naml modif 3al annonnce eli 3maltha donnc hthya hya methode
-
-    @PutMapping("/update/{idAnnonceParent}")
-    public AnnonceParent updateAnnonce (@PathVariable Long idAnnonceParent , @RequestBody AnnonceParent Annonce)
+    //hthya methode get annonce
+    @GetMapping("/affichelisteAnnonce")
+    public List<AnnonceParent> getAllAnnonceParent()
     {
-        return AnnonceParServ.updateAnnonce(idAnnonceParent, Annonce);
+        return  AnnonceParServ.getAllAnnonce();
     }
 
 
-    //hthya methode supprimer Annonce mta3 parent
-
-    @DeleteMapping(value="/deleteAnnonce/{idAnnonceParent}")
-    public void deleteAnnonce(@PathVariable Long idAnnonceParent)
-    {
-        AnnonceParServ.deleteAnnonce(idAnnonceParent);
-    }
-
-    //hthya bch tafichiliannonce eli a3mlthom el koul
-
-
-
-    @GetMapping("/afficheAnnonce")
-    public List<AnnonceParent> getAllAnnonce()
-    {
-        return AnnonceParServ.getAllAnnonceParent();
+    @PutMapping("/modifyByParentId/{id}")
+    public AnnonceParent modifierAnnonceParentByParentId(@PathVariable Long id, @RequestBody AnnonceDeto newAnnonce) {
+        return AnnonceParServ.modifierAnnonceParentByParentId(id, newAnnonce);
     }
 
 
-
-
+    @DeleteMapping("/{id}/{idAnnonceParent}")
+    public ResponseEntity<String> deleteAnnouncementForParentById(@PathVariable Long id, @PathVariable Long idAnnonceParent) {
+        AnnonceParServ.deleteAnnouncementForParentById(id, idAnnonceParent);
+        return ResponseEntity.ok("Announcement deleted successfully.");
+    }
 
 
 }
