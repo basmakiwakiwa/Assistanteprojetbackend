@@ -27,13 +27,11 @@ public class AnnonceParent {
     private Long idAnnonceParent;
     private String titreannonce;
     private String description;
-    private int nombreEnfants;
     private Date datedebut;
     private Date datefin;
-    private int budget;
     private String emplacement;
     private String languesparlees;
-    private int agedesenfants;
+
 
 
 

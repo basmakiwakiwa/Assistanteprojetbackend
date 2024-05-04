@@ -66,13 +66,11 @@ public class AnnonceParents  implements AnnonceParentInter{
         // Mettre à jour l'annonce existante avec les nouveaux détails y compris activites
         existingAnnonce.setTitreannonce(newAnnonce.getTitreannonce());
         existingAnnonce.setDescription(newAnnonce.getDescription());
-        existingAnnonce.setNombreEnfants(newAnnonce.getNombreEnfants());
         existingAnnonce.setDatedebut(newAnnonce.getDatedebut());
         existingAnnonce.setDatefin(newAnnonce.getDatefin());
-        existingAnnonce.setBudget(newAnnonce.getBudget());
         existingAnnonce.setEmplacement(newAnnonce.getEmplacement());
         existingAnnonce.setLanguesparlees(newAnnonce.getLanguesparlees());
-        existingAnnonce.setAgedesenfants(newAnnonce.getAgedesenfants());
+
 
         // Modifier les activités de l'annonce parent
         //hthya modifier mta3 service fil annonce
