@@ -11,6 +11,6 @@ public interface AnnonceParentInter {
 
     public AnnonceParent AjouteAnnonceParent(Long id , AnnonceDeto Annonce);
     List<AnnonceParent> getAllAnnonce();
-    public AnnonceParent modifierAnnonceParentByParentId(Long id, Long idAnnonceParent, AnnonceDeto newAnnonce);
+    public AnnonceParent modifierAnnonceParentByParentId(Long idAnnonceParent, AnnonceDeto newAnnonce);
     public void deleteAnnouncementForParentById(Long id, Long idAnnonceParent);
 }

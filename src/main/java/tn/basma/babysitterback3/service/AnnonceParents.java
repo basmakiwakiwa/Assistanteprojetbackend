@@ -54,18 +54,12 @@ public class AnnonceParents  implements AnnonceParentInter{
 
     //hthya methode modifier mta3 annonce w fi westha modifier mta3 service zede
     @Override
-    public AnnonceParent modifierAnnonceParentByParentId(Long id, Long idAnnonceParent, AnnonceDeto newAnnonce) {
-        // Trouver le parent par son ID
-        Parent parent = parentRepo.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Parent not found"));
+    public AnnonceParent modifierAnnonceParentByParentId( Long idAnnonceParent, AnnonceDeto newAnnonce) {
 
-        // Vérifier que l'annonce appartient au parent
         AnnonceParent existingAnnonce = AnnonceParRep.findById(idAnnonceParent)
                 .orElseThrow(() -> new IllegalArgumentException("Announcement not found"));
 
-        if (!existingAnnonce.getParent().equals(parent)) {
-            throw new IllegalArgumentException("You are not authorized to modify this announcement");
-        }
+
 
         // Mettre à jour l'annonce existante avec les nouveaux détails
         existingAnnonce.setTitreannonce(newAnnonce.getTitreannonce());
@@ -76,9 +70,9 @@ public class AnnonceParents  implements AnnonceParentInter{
         existingAnnonce.setLanguesparlees(newAnnonce.getLanguesparlees());
 
         // Modifier les activités de l'annonce parent
-        Services services = serviceAssistanteRepository.findById(newAnnonce.getIdservice())
-                .orElseThrow(() -> new IllegalArgumentException("Services not found"));
-        existingAnnonce.setActivites(services);
+        //Services services = serviceAssistanteRepository.findById(newAnnonce.getIdservice())
+                //.orElseThrow(() -> new IllegalArgumentException("Services not found"));
+        //existingAnnonce.setActivites(services);
 
         return AnnonceParRep.save(existingAnnonce);
     }
