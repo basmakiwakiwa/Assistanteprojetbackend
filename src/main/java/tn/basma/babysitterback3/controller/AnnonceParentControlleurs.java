@@ -37,11 +37,10 @@ public class AnnonceParentControlleurs {
     }
 
 
-    @PutMapping("/modifyByParentId/{id}")
-    public AnnonceParent modifierAnnonceParentByParentId(@PathVariable Long id, @RequestBody AnnonceDeto newAnnonce) {
-        return AnnonceParServ.modifierAnnonceParentByParentId(id, newAnnonce);
+    @PutMapping("/modifyByParentId/{id}/{idAnnonceParent}")
+    public AnnonceParent modifierAnnonceParentByParentId(@PathVariable Long id, @PathVariable Long idAnnonceParent, @RequestBody AnnonceDeto newAnnonce) {
+        return AnnonceParServ.modifierAnnonceParentByParentId(id, idAnnonceParent, newAnnonce);
     }
-
 
     @DeleteMapping("/{id}/{idAnnonceParent}")
     public ResponseEntity<String> deleteAnnouncementForParentById(@PathVariable Long id, @PathVariable Long idAnnonceParent) {

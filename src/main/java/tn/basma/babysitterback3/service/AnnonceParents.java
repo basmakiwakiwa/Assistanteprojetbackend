@@ -54,16 +54,20 @@ public class AnnonceParents  implements AnnonceParentInter{
 
     //hthya methode modifier mta3 annonce w fi westha modifier mta3 service zede
     @Override
-    public AnnonceParent modifierAnnonceParentByParentId(Long id, AnnonceDeto newAnnonce) {
-        // Trouver le parent par ID
+    public AnnonceParent modifierAnnonceParentByParentId(Long id, Long idAnnonceParent, AnnonceDeto newAnnonce) {
+        // Trouver le parent par son ID
         Parent parent = parentRepo.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Parent not found"));
 
-        // Trouver l'annonce existante pour ce parent
-        AnnonceParent existingAnnonce = AnnonceParRep.findByParent(parent)
-                .orElseThrow(() -> new IllegalArgumentException("Announcement not found for this parent"));
+        // Vérifier que l'annonce appartient au parent
+        AnnonceParent existingAnnonce = AnnonceParRep.findById(idAnnonceParent)
+                .orElseThrow(() -> new IllegalArgumentException("Announcement not found"));
 
-        // Mettre à jour l'annonce existante avec les nouveaux détails y compris activites
+        if (!existingAnnonce.getParent().equals(parent)) {
+            throw new IllegalArgumentException("You are not authorized to modify this announcement");
+        }
+
+        // Mettre à jour l'annonce existante avec les nouveaux détails
         existingAnnonce.setTitreannonce(newAnnonce.getTitreannonce());
         existingAnnonce.setDescription(newAnnonce.getDescription());
         existingAnnonce.setDatedebut(newAnnonce.getDatedebut());
@@ -71,9 +75,7 @@ public class AnnonceParents  implements AnnonceParentInter{
         existingAnnonce.setEmplacement(newAnnonce.getEmplacement());
         existingAnnonce.setLanguesparlees(newAnnonce.getLanguesparlees());
 
-
         // Modifier les activités de l'annonce parent
-        //hthya modifier mta3 service fil annonce
         Services services = serviceAssistanteRepository.findById(newAnnonce.getIdservice())
                 .orElseThrow(() -> new IllegalArgumentException("Services not found"));
         existingAnnonce.setActivites(services);
@@ -81,6 +83,8 @@ public class AnnonceParents  implements AnnonceParentInter{
         return AnnonceParRep.save(existingAnnonce);
     }
 
+
+//hthya methode supprimer
     @Override
     @Transactional // Add @Transactional annotation here
     public void deleteAnnouncementForParentById(Long id, Long idAnnonceParent) {

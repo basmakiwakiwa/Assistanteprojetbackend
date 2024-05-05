@@ -11,7 +11,8 @@ import java.util.Optional;
 @Repository
 public interface AnnonceParentRepository extends JpaRepository<AnnonceParent,Long> {
     Optional<AnnonceParent> findByParent(Parent parent);
-    List<AnnonceParent> findAllByParent(Parent parent);
+    Optional<AnnonceParent> findByIdAnnonceParent(Long id);
     void deleteByIdAnnonceParentAndParentId(Long idAnnonceParent, Long id);
 
+    List<AnnonceParent> findAllByParent(Parent parent);
 }

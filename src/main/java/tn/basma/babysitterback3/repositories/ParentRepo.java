@@ -12,4 +12,5 @@ public interface ParentRepo extends JpaRepository<Parent,Long> {
 
     Parent getParentById(Long idAnnonceParent);
 
+
 }
