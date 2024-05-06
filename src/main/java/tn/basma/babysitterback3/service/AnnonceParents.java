@@ -69,10 +69,10 @@ public class AnnonceParents  implements AnnonceParentInter{
         existingAnnonce.setEmplacement(newAnnonce.getEmplacement());
         existingAnnonce.setLanguesparlees(newAnnonce.getLanguesparlees());
 
-        // Modifier les activités de l'annonce parent
-        //Services services = serviceAssistanteRepository.findById(newAnnonce.getIdservice())
-                //.orElseThrow(() -> new IllegalArgumentException("Services not found"));
-        //existingAnnonce.setActivites(services);
+        //Modifier les activités de l'annonce parent
+        Services services = serviceAssistanteRepository.findById(newAnnonce.getIdservice())
+                .orElseThrow(() -> new IllegalArgumentException("Services not found"));
+        existingAnnonce.setActivites(services);
 
         return AnnonceParRep.save(existingAnnonce);
     }
