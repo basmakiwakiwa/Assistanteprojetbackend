@@ -1,7 +1,6 @@
 package tn.basma.babysitterback3.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import tn.basma.babysitterback3.dto.AnnonceDeto;
 import tn.basma.babysitterback3.entites.AnnonceParent;
@@ -45,11 +44,25 @@ public class AnnonceParentControlleurs {
 
 
 
-    @DeleteMapping("/{id}/{idAnnonceParent}")
+    @DeleteMapping("/delete/{idAnnonceParent}")
+    public void supprimerAnnonceParentById(@PathVariable Long idAnnonceParent) {
+        AnnonceParServ.supprimerAnnonceParentById(idAnnonceParent);
+
+    }
+
+
+
+
+
+
+
+
+/*
+    @DeleteMapping("/{idAnnonceParent}")
     public ResponseEntity<String> deleteAnnouncementForParentById(@PathVariable Long id, @PathVariable Long idAnnonceParent) {
         AnnonceParServ.deleteAnnouncementForParentById(id, idAnnonceParent);
         return ResponseEntity.ok("Announcement deleted successfully.");
     }
 
-
+*/
 }

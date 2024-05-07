@@ -1,6 +1,5 @@
 package tn.basma.babysitterback3.service;
 
-import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tn.basma.babysitterback3.dto.AnnonceDeto;
@@ -78,11 +77,20 @@ public class AnnonceParents  implements AnnonceParentInter{
     }
 
 
+
+    public void supprimerAnnonceParentById(Long idAnnonceParent) {
+        // Ajoutez votre logique de suppression ici, par exemple :
+        AnnonceParRep.deleteById(idAnnonceParent);
+    }
+
+
+
+
 //hthya methode supprimer
-    @Override
+   /* @Override
     @Transactional // Add @Transactional annotation here
     public void deleteAnnouncementForParentById(Long id, Long idAnnonceParent) {
         AnnonceParRep.deleteByIdAnnonceParentAndParentId(idAnnonceParent, id);
     }
-
+*/
 }
