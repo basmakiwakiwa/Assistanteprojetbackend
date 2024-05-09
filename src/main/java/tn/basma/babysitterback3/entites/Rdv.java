@@ -11,7 +11,8 @@ import lombok.experimental.FieldDefaults;
 @NoArgsConstructor
 @FieldDefaults(level= AccessLevel.PRIVATE)
 @Entity
-public class rdv {
+@Builder
+public class Rdv {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,12 +22,12 @@ public class rdv {
     private  String fixepar;
 
 
-//hthya relation bin rdv wel parent
-    @JsonIgnore
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "parent_id")
-    private Parent parent;
 
+//hthya relation bin rdv wel parent
+@JsonIgnore
+@ManyToOne(fetch = FetchType.LAZY)
+@JoinColumn(name = "parent_id")
+private Parent parent;
 
 
 

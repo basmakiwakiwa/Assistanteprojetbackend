@@ -37,9 +37,8 @@ public class Parent   extends User {
 
 
     @JsonIgnore
-    @OneToMany(mappedBy = "parent",cascade = CascadeType.ALL)
-    private Set<rdv > rdvs = new HashSet<>();
-
+    @OneToMany(mappedBy = "parent", cascade = CascadeType.ALL)
+    private Set<Rdv> rdvs = new HashSet<>();
 
 
 

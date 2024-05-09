@@ -36,7 +36,7 @@ public class AuthenticationService {
 
     private  final DiplomeRepository diplomeRepository;
     private  final CompetenceRepository competenceRepository;
-private  final ServiceAssistanteRepository activitesRepository;
+    private  final ServiceAssistanteRepository activitesRepository;
 
     public Response register(RegisterRequest userRequest, final HttpServletRequest request) {
 
