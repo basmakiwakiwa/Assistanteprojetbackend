@@ -10,4 +10,7 @@ public interface RdvService {
     List<Rdv> getAllRdvsByParentId(Long id);
 
 
+    boolean deleteRdv(Long rdvId);
+
+
 }

@@ -34,6 +34,14 @@ public class RdvController {
     }
 
 
+    @DeleteMapping("/delete/{rdvId}")
+    public ResponseEntity<String> deleteRdv(@PathVariable Long rdvId) {
+        boolean deleted = rdvService.deleteRdv(rdvId);
+        if (deleted) {
+            return new ResponseEntity<>("Rdv deleted successfully", HttpStatus.OK);
+        }
+        return new ResponseEntity<>("Rdv not found or could not be deleted", HttpStatus.NOT_FOUND);
+    }
 
 
 

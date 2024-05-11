@@ -50,8 +50,6 @@ public class RdvServiceImpl implements RdvService {
     }
 
 
-
-
     @Override
     public List<Rdv> getAllRdvsByParentId(Long id) {
         // Récupérer tous les rendez-vous associés à un parent spécifique
@@ -59,7 +57,15 @@ public class RdvServiceImpl implements RdvService {
     }
 
 
-
+    @Override
+    public boolean deleteRdv(Long rdvId) {
+        // Implémentez la logique pour supprimer un RDV par son ID ici
+        if (rdvRepository.existsById(rdvId)) {
+            rdvRepository.deleteById(rdvId);
+            return true;
+        }
+        return false;
+    }
 
 
 
