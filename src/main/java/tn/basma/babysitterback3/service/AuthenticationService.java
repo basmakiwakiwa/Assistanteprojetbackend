@@ -185,6 +185,7 @@ public class AuthenticationService {
                 .accessToken(jwtToken)
                 .refreshToken(refreshToken)
                 .role(role)
+                .id(user.getId())
                 .build();
     }
 

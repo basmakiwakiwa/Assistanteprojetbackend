@@ -18,7 +18,7 @@ public class RdvController {
     private RdvService rdvService;
 
     @PostMapping("/add/{id}/{idauxiliaires}")
-    public ResponseEntity<Rdv> addRdvWithParent(@PathVariable Long id,Long idauxiliaires, @RequestBody Rdv rdv) {
+    public ResponseEntity<Rdv> addRdvWithParent(@PathVariable Long id,@PathVariable Long idauxiliaires, @RequestBody Rdv rdv) {
         Rdv savedRdv = rdvService.saveRdvWithParent(id,idauxiliaires, rdv);
         if (savedRdv != null) {
             return new ResponseEntity<>(savedRdv, HttpStatus.CREATED);

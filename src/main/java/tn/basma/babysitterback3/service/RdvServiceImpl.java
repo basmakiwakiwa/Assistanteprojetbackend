@@ -34,10 +34,15 @@ public class RdvServiceImpl implements RdvService {
         if (parentOptional.isPresent()) {
             Parent parent = parentOptional.get();
             rdv.setParent(parent);
+            //lehne hthya kifh b3athet mail
             EmailDetails emaildetails = new EmailDetails();
             emaildetails.setTo(auxiliairesOptional.get().getEmail());
-            emaildetails.setSubject("demande rdv");
-            emaildetails.setMessageBody(rdv.getDescription());
+            emaildetails.setSubject(" Demande de rendez-vous ");
+            emaildetails.setMessageBody("Bonjour" +
+                    " J'espère que vous allez bien.J'espère que vous allez bien. Je me permets de vous contacter car j'aimerais fixer un rendez-vous Il y a quelques points importants que j'aimerais aborder avec vous, notamment les horaires, les activités prévues,\n" +
+                    "Serait-il possible de convenir d'un créneau dans les prochains jours qui vous convienne ? Je suis flexible et prêt(e) à m'adapter à votre disponibilité.\n" +
+                    "\n" +
+                    "Merci d'avance pour votre retour.  ");
             emailService.sendSimpleMail(emaildetails);
             return rdvRepository.save(rdv);
         }

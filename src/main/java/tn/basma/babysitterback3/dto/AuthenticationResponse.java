@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 public class AuthenticationResponse {
     private String role;
     //hthye yraj3li response mta3 tokenn
-
+    private Long id ;
     @JsonProperty("access_token")
     private String accessToken;
     @JsonProperty("refresh_token")
