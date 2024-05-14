@@ -18,8 +18,8 @@ public class Rdv {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private  Long id_rdv;
     private  String description;
-    private  String etatrdv;
-    private  String fixepar;
+    private String etatrdv ;
+    private String fixepar;
 
 
 
