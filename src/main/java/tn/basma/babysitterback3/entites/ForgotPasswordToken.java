@@ -1,5 +1,6 @@
 package tn.basma.babysitterback3.entites;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -25,7 +26,7 @@ public class ForgotPasswordToken {
     private Date expirationTime;
 
     private static final int EXPIRATION_TIME = 1;
-
+    @JsonIgnore
     @OneToOne
     @JoinColumn(name = "user_id")
     private User user;

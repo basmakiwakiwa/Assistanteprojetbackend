@@ -13,6 +13,7 @@ import tn.basma.babysitterback3.repositories.RdvParentRepo;
 
 import java.util.List;
 import java.util.Optional;
+
 @RequiredArgsConstructor
 @Service
 public class RdvServiceImpl implements RdvService {
@@ -26,29 +27,34 @@ public class RdvServiceImpl implements RdvService {
     @Autowired
     private  EmailService emailService;
 
-    @Override
-    public Rdv saveRdvWithParent(Long id,Long idauxiliaires, Rdv rdv) {
-        Optional<Parent> parentOptional = parentRepo.findById(id);
-        Optional<auxiliairesdevie> auxiliairesOptional =assistanteRepo.findById(idauxiliaires);
 
-        if (parentOptional.isPresent()) {
+
+    @Override
+    public Rdv saveRdvWithParent(Long id, Long idauxiliaires, Rdv rdv) {
+        // Vérification des IDs
+        Optional<Parent> parentOptional = parentRepo.findById(id);
+        Optional<auxiliairesdevie> auxiliairesOptional = assistanteRepo.findById(idauxiliaires);
+
+        if (parentOptional.isPresent() && auxiliairesOptional.isPresent()) {
             Parent parent = parentOptional.get();
+            auxiliairesdevie auxiliaire = auxiliairesOptional.get();
+
+            // Assignation de l'auxiliaire
             rdv.setParent(parent);
-            //lehne hthya kifh b3athet mail
+            rdv.setAuxiliairesdevies(auxiliaire);
+
+            // Envoi de l'email
             EmailDetails emaildetails = new EmailDetails();
-            emaildetails.setTo(auxiliairesOptional.get().getEmail());
-            emaildetails.setSubject(" Demande de rendez-vous ");
-            emaildetails.setMessageBody("Bonjour" +
-                    " J'espère que vous allez bien.J'espère que vous allez bien. Je me permets de vous contacter car j'aimerais fixer un rendez-vous Il y a quelques points importants que j'aimerais aborder avec vous, notamment les horaires, les activités prévues,\n" +
-                    "Serait-il possible de convenir d'un créneau dans les prochains jours qui vous convienne ? Je suis flexible et prêt(e) à m'adapter à votre disponibilité.\n" +
-                    "\n" +
-                    "Merci d'avance pour votre retour.  ");
+            emaildetails.setTo(auxiliaire.getEmail());
+            emaildetails.setSubject("Demande de rendez-vous");
+            emaildetails.setMessageBody("Votre message ici...");
             emailService.sendSimpleMail(emaildetails);
+
+            // Sauvegarde du rendez-vous
             return rdvRepository.save(rdv);
         }
-        return null;
+        return null; // Ou gestion de l'erreur selon votre logique
     }
-
 
     @Override
     public List<Rdv> getAllRdvsByParentId(Long id) {
@@ -66,6 +72,31 @@ public class RdvServiceImpl implements RdvService {
         }
         return false;
     }
+
+    @Override
+    public Rdv updateRdv(Long rdvId, Rdv rdvDetails) {
+        // Logique pour mettre à jour un RDV spécifié par son ID avec les détails fournis
+        Optional<Rdv> rdvOptional = rdvRepository.findById(rdvId);
+        if (rdvOptional.isPresent()) {
+            Rdv existingRdv = rdvOptional.get();
+            // Mettre à jour les propriétés du RDV avec les nouvelles valeurs
+            existingRdv.setDescription(rdvDetails.getDescription());
+            existingRdv.setEtatrdv(rdvDetails.getEtatrdv());
+            existingRdv.setFixepar(rdvDetails.getFixepar());
+            // Enregistrer les modifications en base de données
+            return rdvRepository.save(existingRdv);
+        }
+        return null;
+    }
+
+
+
+    @Override
+    public List<Rdv> getRdvByAuxiliaireId(Long auxiliaireId) {
+        return rdvRepository.findByAuxiliairesdeviesId(auxiliaireId);
+    }
+
+
 
 
 

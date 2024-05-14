@@ -45,4 +45,34 @@ public class RdvController {
 
 
 
+
+    @PutMapping("/update/{rdvId}")
+    public ResponseEntity<Rdv> updateRdv(@PathVariable Long rdvId, @RequestBody Rdv rdvDetails) {
+        Rdv updatedRdv = rdvService.updateRdv(rdvId, rdvDetails);
+        if (updatedRdv != null) {
+            return new ResponseEntity<>(updatedRdv, HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
+
+
+
+
+    @GetMapping("/RDVauxiliaire/{auxiliaireId}")
+    public ResponseEntity<List<Rdv>> getRdvByAuxiliaireId(@PathVariable Long auxiliaireId) {
+        List<Rdv> rdvs = rdvService.getRdvByAuxiliaireId(auxiliaireId);
+        return ResponseEntity.ok(rdvs);
+    }
+
+
+
+
+
+
+
+
+
+
+
 }

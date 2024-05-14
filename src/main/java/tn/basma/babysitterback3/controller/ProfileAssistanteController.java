@@ -3,16 +3,16 @@ package tn.basma.babysitterback3.controller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import tn.basma.babysitterback3.entites.Services;
+import tn.basma.babysitterback3.dto.auxiliairesdevieDto;
 import tn.basma.babysitterback3.entites.Competence;
 import tn.basma.babysitterback3.entites.Diplome;
+import tn.basma.babysitterback3.entites.Services;
 import tn.basma.babysitterback3.entites.auxiliairesdevie;
-import tn.basma.babysitterback3.repositories.ServiceAssistanteRepository;
 import tn.basma.babysitterback3.repositories.CompetenceRepository;
 import tn.basma.babysitterback3.repositories.DiplomeRepository;
+import tn.basma.babysitterback3.repositories.ServiceAssistanteRepository;
 import tn.basma.babysitterback3.service.ProfileAssistanteImp;
 
-import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -42,7 +42,7 @@ private  final CompetenceRepository  competenceRepository;
 
 
     @PutMapping("/Assistante/{id}")
-    public boolean modifierAuxiliaireDeVie( @PathVariable String id,  @RequestBody auxiliairesdevie auxiliaireDeVieModifie) {
+    public boolean modifierAuxiliaireDeVie( @PathVariable String id,  @RequestBody auxiliairesdevieDto  auxiliaireDeVieModifie) {
         // Récupérez l'auxiliaire de vie à modifier
         Optional<auxiliairesdevie> auxiliaireDeVieOptional = profileAssistanteImp.getauxiliairesdevie(auxiliaireDeVieModifie.getEmail());
 
@@ -65,38 +65,19 @@ private  final CompetenceRepository  competenceRepository;
             auxiliaireDeVie.setEtatcivil(auxiliaireDeVieModifie.getEtatcivil());
             auxiliaireDeVie.setNiveaudeetude(auxiliaireDeVieModifie.getNiveaudeetude());
 
+
+
+
             if (auxiliaireDeVieModifie.getIddiplome() != null) {
-                Set<Diplome> diplomesActuels = auxiliaireDeVie.getDiplomeBabysitter();
-                List<Long> nouveauxIdsDiplomes = auxiliaireDeVieModifie.getIddiplome();
+                Set<Diplome>  diplomes = auxiliaireDeVie.getDiplomeBabysitter();
 
-                // Remove diplomas that are not in the new list
-                diplomesActuels.removeIf(diplome -> !nouveauxIdsDiplomes.contains(diplome.getId()));
-
-                // Add new diplomas from the new list
-                for (Long idDiplome : nouveauxIdsDiplomes) {
-                    if (diplomesActuels.stream().noneMatch(diplome -> diplome.getId().equals(idDiplome))) {
-                        Diplome diplome = diplomeRepository.findById(idDiplome)
-                                .orElseThrow(() -> new IllegalArgumentException("Diplome non trouvé pour l'ID: " + idDiplome));
-                        diplomesActuels.add(diplome);
-                    }
-                }
-            }
-
-
-            //hthya code mta3 diplome ki nhb namlou modifier 5atrou liste 5atr amltou kima lokhrinn mahabch
-
-
-
-            /*if (auxiliaireDeVieModifie.getIddiplome() != null) {
-                Set<Diplome> diplomes = auxiliaireDeVie.getDiplomeBabysitter();
                 diplomes.clear();
                 for (Long idDiplome : auxiliaireDeVieModifie.getIddiplome()) {
                     Diplome diplome = diplomeRepository.findById(idDiplome)
-                            .orElseThrow(() -> new IllegalArgumentException("Diplome non trouvé pour l'ID: " + idDiplome));
+                            .orElseThrow(() -> new IllegalArgumentException("diplome non trouvée pour l'ID: " + idDiplome));
                     diplomes.add(diplome);
                 }
-            }*/
-
+            }
 
 
             if (auxiliaireDeVieModifie.getIdcompetance() != null) {
@@ -133,9 +114,13 @@ private  final CompetenceRepository  competenceRepository;
 
 
 
-
-
-
+/*
+    @GetMapping("/{auxiliaireId}/parents")
+    public ResponseEntity<Set<Parent>> getParentsForAuxiliaire(@PathVariable Long auxiliaireId) {
+        Set<Parent> parents = profileAssistanteImp.getParentsForAuxiliaire(auxiliaireId);
+        return ResponseEntity.ok(parents);
+    }
+*/
 
 
 

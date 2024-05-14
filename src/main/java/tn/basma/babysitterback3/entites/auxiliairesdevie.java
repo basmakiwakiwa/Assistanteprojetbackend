@@ -1,6 +1,7 @@
 package tn.basma.babysitterback3.entites;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 import lombok.*;
@@ -8,6 +9,7 @@ import lombok.experimental.FieldDefaults;
 import lombok.experimental.SuperBuilder;
 
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -28,7 +30,7 @@ public class auxiliairesdevie extends User {
     private int     budget;
     private String  dispo;
     private String  langues;
-    private String  piecejustificative;
+
     private String  experience;
     private String  adresse;
     private int     cin;
@@ -60,6 +62,14 @@ public class auxiliairesdevie extends User {
     @ManyToMany
     @JoinTable(name = "AuxiliairesdevieActivites")
     private Set<Services> ActivitesAuxiliairesdevie;
+
+
+
+
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "auxiliairesdevies", cascade = CascadeType.ALL)
+    private Set<Rdv> rdvs = new HashSet<>();
 
 
 

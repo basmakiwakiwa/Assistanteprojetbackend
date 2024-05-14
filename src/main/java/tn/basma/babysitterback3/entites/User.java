@@ -48,7 +48,7 @@ public class User implements UserDetails {
     @OneToMany(mappedBy = "user" , cascade = CascadeType.ALL)
     private List<Token> tokens;
 
-
+    @JsonIgnore
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private  VerificationToken verificationToken;
 
@@ -90,7 +90,7 @@ public class User implements UserDetails {
 
     //hthya relation image hya wel user
     //image
-
+    @JsonIgnore
     @OneToOne(mappedBy = "userEntity")
     private Image userImage;
 

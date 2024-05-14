@@ -12,5 +12,11 @@ public interface RdvService {
 
     boolean deleteRdv(Long rdvId);
 
+    Rdv updateRdv(Long rdvId, Rdv rdvDetails);
+
+
+    List<Rdv> getRdvByAuxiliaireId(Long auxiliaireId);
+
+
 
 }

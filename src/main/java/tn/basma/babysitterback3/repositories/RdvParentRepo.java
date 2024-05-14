@@ -10,4 +10,8 @@ import java.util.List;
 public interface RdvParentRepo extends JpaRepository<Rdv,Long> {
     List<Rdv> findByParentId(Long id);
 
+
+    List<Rdv> findByAuxiliairesdeviesId(Long auxiliaireId);
+
+
 }
