@@ -6,6 +6,7 @@ import tn.basma.babysitterback3.entites.Parent;
 import tn.basma.babysitterback3.service.ListeParent;
 
 import java.util.List;
+import java.util.Optional;
 
 @RequestMapping("/listeparent")
 
@@ -41,5 +42,12 @@ public class ListeParentControlleur {
        return  listParentServ.updateParent(user_id,parent);
     }
 
+
+
+
+    @GetMapping("/{id}")
+    public Optional<Parent> getParentById(@PathVariable Long id) {
+        return listParentServ.getById(id);
+    }
 
 }

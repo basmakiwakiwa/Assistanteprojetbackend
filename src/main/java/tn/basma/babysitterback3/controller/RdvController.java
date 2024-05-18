@@ -69,9 +69,25 @@ public class RdvController {
 
 
 
+    @PutMapping("/accepter/{id}")
+    public ResponseEntity<Rdv> accepterRdv(@PathVariable("id") Long id) {
+        Rdv rdv = rdvService.accepterRdv(id);
+        return ResponseEntity.ok(rdv);
+    }
 
 
+    @PutMapping("/NonAccepte/{id}")
+    public ResponseEntity<Rdv> refuserRdv(@PathVariable("id") Long id) {
+        Rdv rdv = rdvService.refuserRdv(id);
+        return ResponseEntity.ok(rdv);
+    }
 
+
+    @PutMapping("/EnAttente/{id}")
+    public ResponseEntity<Rdv> mettreEnAttenteRdv(@PathVariable("id") Long id) {
+        Rdv rdv = rdvService.mettreEnAttenteRdv(id);
+        return ResponseEntity.ok(rdv);
+    }
 
 
 

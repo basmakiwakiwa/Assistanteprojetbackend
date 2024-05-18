@@ -2,6 +2,7 @@ package tn.basma.babysitterback3.entites;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 import lombok.*;
@@ -15,6 +16,8 @@ import java.util.Set;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+
 @FieldDefaults(level= AccessLevel.PRIVATE)
 @Table(name = "Parent")
 @SuperBuilder
@@ -33,7 +36,6 @@ public class Parent   extends User {
     @JsonIgnore
     @OneToMany(mappedBy = "parent",cascade = CascadeType.ALL)
     private Set<AnnonceParent> annonceParents = new HashSet<>();
-
 
 
     @JsonIgnore

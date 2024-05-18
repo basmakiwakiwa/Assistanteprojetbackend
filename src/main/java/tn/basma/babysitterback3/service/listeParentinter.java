@@ -3,8 +3,8 @@ package tn.basma.babysitterback3.service;
 
 import tn.basma.babysitterback3.entites.Parent;
 
-
 import java.util.List;
+import java.util.Optional;
 
 public interface listeParentinter {
 
@@ -19,6 +19,7 @@ public interface listeParentinter {
 
     public Parent updateParent (Long iduser, Parent parent);
 
+    Optional<Parent> getById(Long id);
 
 
 }

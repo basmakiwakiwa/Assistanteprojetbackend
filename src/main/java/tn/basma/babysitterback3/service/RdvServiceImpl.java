@@ -47,7 +47,21 @@ public class RdvServiceImpl implements RdvService {
             EmailDetails emaildetails = new EmailDetails();
             emaildetails.setTo(auxiliaire.getEmail());
             emaildetails.setSubject("Demande de rendez-vous");
-            emaildetails.setMessageBody("Votre message ici...");
+            emaildetails.setMessageBody("Bonjour \n" +
+                    "\n" +
+                    "J'espère que vous allez bien.\n" +
+                    "\n" +
+                    "Je suis le parent , et je souhaite convenir d'un rendez-vous pour discuter de\n" +
+                    "\n" +
+                    "Voici mes disponibilités pour la semaine à venir :\n" +
+                    "\n" +
+                    "Lundi : de 10h à 12h\n" +
+                    "Mardi : de 14h à 16h\n" +
+                    "Mercredi : de 9h à 11h\n" +
+                    "Jeudi : de 15h à 17h\n" +
+                    "Pouvez-vous me confirmer un créneau qui vous convient parmi ces horaires, ou me proposer une alternative si nécessaire ?\n" +
+                    "\n" +
+                    "Je vous remercie d'avance pour votre disponibilité et votre attention à notre situation.");
             emailService.sendSimpleMail(emaildetails);
 
             // Sauvegarde du rendez-vous
@@ -79,11 +93,8 @@ public class RdvServiceImpl implements RdvService {
         Optional<Rdv> rdvOptional = rdvRepository.findById(rdvId);
         if (rdvOptional.isPresent()) {
             Rdv existingRdv = rdvOptional.get();
-            // Mettre à jour les propriétés du RDV avec les nouvelles valeurs
             existingRdv.setDescription(rdvDetails.getDescription());
             existingRdv.setEtatrdv(rdvDetails.getEtatrdv());
-            existingRdv.setFixepar(rdvDetails.getFixepar());
-            // Enregistrer les modifications en base de données
             return rdvRepository.save(existingRdv);
         }
         return null;
@@ -94,6 +105,42 @@ public class RdvServiceImpl implements RdvService {
     @Override
     public List<Rdv> getRdvByAuxiliaireId(Long auxiliaireId) {
         return rdvRepository.findByAuxiliairesdeviesId(auxiliaireId);
+    }
+
+
+//hthya methode mta3 accepte rdv
+
+    @Override
+    public Rdv accepterRdv(Long idRdv) {
+        Rdv rdv = rdvRepository.findById(idRdv)
+                .orElseThrow(() -> new IllegalArgumentException("Rdv not found with id: " + idRdv));
+
+        rdv.setEtatrdv("Accepte");
+
+        return rdvRepository.save(rdv);
+    }
+
+
+//hthya methode Non accepte
+    @Override
+    public Rdv refuserRdv(Long idRdv) {
+        Rdv rdv = rdvRepository.findById(idRdv)
+                .orElseThrow(() -> new IllegalArgumentException("Rdv not found with id: " + idRdv));
+
+        rdv.setEtatrdv("Non Accepte");
+
+        return rdvRepository.save(rdv);
+    }
+
+
+    @Override
+    public Rdv mettreEnAttenteRdv(Long idRdv) {
+        Rdv rdv = rdvRepository.findById(idRdv)
+                .orElseThrow(() -> new IllegalArgumentException("Rdv not found with id: " + idRdv));
+
+        rdv.setEtatrdv("En attente");
+
+        return rdvRepository.save(rdv);
     }
 
 

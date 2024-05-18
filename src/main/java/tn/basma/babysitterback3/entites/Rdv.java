@@ -1,6 +1,7 @@
 package tn.basma.babysitterback3.entites;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -9,6 +10,8 @@ import lombok.experimental.FieldDefaults;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+
 @FieldDefaults(level= AccessLevel.PRIVATE)
 @Entity
 @Builder
@@ -19,16 +22,12 @@ public class Rdv {
     private  Long id_rdv;
     private  String description;
     private String etatrdv ;
-    private String fixepar;
 
 
-
-
-    //hthya relation bin rdv wel parent
-@JsonIgnore
-@ManyToOne(fetch = FetchType.LAZY)
-@JoinColumn(name = "parent_id")
-private Parent parent;
+    @JsonIgnore
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "parent_id")
+    private Parent parent;
 
 
 
@@ -37,6 +36,9 @@ private Parent parent;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "idauxiliaires")
     private auxiliairesdevie  auxiliairesdevies;
+
+
+
 
 
 

@@ -17,6 +17,13 @@ public interface RdvService {
 
     List<Rdv> getRdvByAuxiliaireId(Long auxiliaireId);
 
+//hthya mta3 accepte rdv
+    Rdv accepterRdv(Long idRdv);
 
+//hthya methode non accepte
+    Rdv refuserRdv(Long idRdv);
+
+
+    Rdv mettreEnAttenteRdv(Long idRdv);
 
 }

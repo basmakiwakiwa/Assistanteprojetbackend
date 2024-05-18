@@ -5,16 +5,11 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
-
-
 import tn.basma.babysitterback3.entites.Parent;
-
 import tn.basma.babysitterback3.repositories.ParentRepo;
 
-
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -33,8 +28,10 @@ public class ListeParent implements listeParentinter{
     }
 
 
-
-
+    @Override
+    public Optional<Parent> getById(Long id) {
+        return parentrep.findById(id);
+    }
 
     @Override
     public List<Parent> getAllParent() {
