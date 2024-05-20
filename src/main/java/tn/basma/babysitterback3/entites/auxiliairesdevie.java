@@ -66,11 +66,18 @@ public class auxiliairesdevie extends User {
 
 
 
-
+//hthya sta3mltha bch nab3th rdv lil auxelier
     @JsonIgnore
     @OneToMany(mappedBy = "auxiliairesdevies", cascade = CascadeType.ALL)
-    private Set<Rdv> rdvs = new HashSet<>();
+    private Set<RdvParent> rdvs = new HashSet<>();
 
+
+
+
+//hthya relation bin table auxelier w rdv auxelier
+    @JsonIgnore
+    @OneToMany(mappedBy = "auxiliairesdevies", cascade = CascadeType.ALL)
+    private Set<Rdvauxiliaires> rdvss = new HashSet<>();
 
 
 }

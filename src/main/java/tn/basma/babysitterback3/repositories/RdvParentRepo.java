@@ -2,16 +2,17 @@ package tn.basma.babysitterback3.repositories;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import tn.basma.babysitterback3.entites.Rdv;
+import tn.basma.babysitterback3.entites.RdvParent;
 
 import java.util.List;
 
 @Repository
-public interface RdvParentRepo extends JpaRepository<Rdv,Long> {
-    List<Rdv> findByParentId(Long id);
+public interface RdvParentRepo extends JpaRepository<RdvParent,Long> {
+    List<RdvParent> findByParentId(Long id);
 
 
-    List<Rdv> findByAuxiliairesdeviesId(Long auxiliaireId);
+    List<RdvParent> findByAuxiliairesdeviesId(Long auxiliaireId);
+
 
 
 }

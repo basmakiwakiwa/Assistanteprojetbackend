@@ -4,22 +4,23 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import tn.basma.babysitterback3.entites.Rdv;
-import tn.basma.babysitterback3.service.RdvService;
+import tn.basma.babysitterback3.entites.RdvParent;
+import tn.basma.babysitterback3.service.RdvparentService;
 
 import java.util.List;
 
 @RequestMapping("/api/v1/rdvparent")
 
 @RestController
-public class RdvController {
+public class RdvparentController {
 
     @Autowired
-    private RdvService rdvService;
+    private RdvparentService rdvService;
+
 
     @PostMapping("/add/{id}/{idauxiliaires}")
-    public ResponseEntity<Rdv> addRdvWithParent(@PathVariable Long id,@PathVariable Long idauxiliaires, @RequestBody Rdv rdv) {
-        Rdv savedRdv = rdvService.saveRdvWithParent(id,idauxiliaires, rdv);
+    public ResponseEntity<RdvParent> addRdvWithParent(@PathVariable Long id, @PathVariable Long idauxiliaires, @RequestBody RdvParent rdv) {
+        RdvParent savedRdv = rdvService.saveRdvWithParent(id,idauxiliaires, rdv);
         if (savedRdv != null) {
             return new ResponseEntity<>(savedRdv, HttpStatus.CREATED);
         }
@@ -27,9 +28,18 @@ public class RdvController {
     }
 
 
+
+
+
+
+
+
+
+
+//liste hthya yjibli liste lkoul mta3 rdv par id paernt
     @GetMapping("/all/{id}")
-    public ResponseEntity<List<Rdv>> getAllRdvsByParentId(@PathVariable Long id) {
-        List<Rdv> rdvs = rdvService.getAllRdvsByParentId(id);
+    public ResponseEntity<List<RdvParent>> getAllRdvsByParentId(@PathVariable Long id) {
+        List<RdvParent> rdvs = rdvService.getAllRdvsByParentId(id);
         return new ResponseEntity<>(rdvs, HttpStatus.OK);
     }
 
@@ -47,8 +57,8 @@ public class RdvController {
 
 
     @PutMapping("/update/{rdvId}")
-    public ResponseEntity<Rdv> updateRdv(@PathVariable Long rdvId, @RequestBody Rdv rdvDetails) {
-        Rdv updatedRdv = rdvService.updateRdv(rdvId, rdvDetails);
+    public ResponseEntity<RdvParent> updateRdv(@PathVariable Long rdvId, @RequestBody RdvParent rdvDetails) {
+        RdvParent updatedRdv = rdvService.updateRdv(rdvId, rdvDetails);
         if (updatedRdv != null) {
             return new ResponseEntity<>(updatedRdv, HttpStatus.OK);
         }
@@ -60,35 +70,33 @@ public class RdvController {
 
 
     @GetMapping("/RDVauxiliaire/{auxiliaireId}")
-    public ResponseEntity<List<Rdv>> getRdvByAuxiliaireId(@PathVariable Long auxiliaireId) {
-        List<Rdv> rdvs = rdvService.getRdvByAuxiliaireId(auxiliaireId);
+    public ResponseEntity<List<RdvParent>> getRdvByAuxiliaireId(@PathVariable Long auxiliaireId) {
+        List<RdvParent> rdvs = rdvService.getRdvByAuxiliaireId(auxiliaireId);
         return ResponseEntity.ok(rdvs);
     }
 
 
 
 
-
+//hthya methode accepte
     @PutMapping("/accepter/{id}")
-    public ResponseEntity<Rdv> accepterRdv(@PathVariable("id") Long id) {
-        Rdv rdv = rdvService.accepterRdv(id);
+    public ResponseEntity<RdvParent> accepterRdv(@PathVariable("id") Long id) {
+        RdvParent rdv = rdvService.accepterRdv(id);
         return ResponseEntity.ok(rdv);
     }
 
-
+//hthya methode non accepte
     @PutMapping("/NonAccepte/{id}")
-    public ResponseEntity<Rdv> refuserRdv(@PathVariable("id") Long id) {
-        Rdv rdv = rdvService.refuserRdv(id);
+    public ResponseEntity<RdvParent> refuserRdv(@PathVariable("id") Long id) {
+        RdvParent rdv = rdvService.refuserRdv(id);
         return ResponseEntity.ok(rdv);
     }
 
-
+//hthye methode en attente
     @PutMapping("/EnAttente/{id}")
-    public ResponseEntity<Rdv> mettreEnAttenteRdv(@PathVariable("id") Long id) {
-        Rdv rdv = rdvService.mettreEnAttenteRdv(id);
+    public ResponseEntity<RdvParent> mettreEnAttenteRdv(@PathVariable("id") Long id) {
+        RdvParent rdv = rdvService.mettreEnAttenteRdv(id);
         return ResponseEntity.ok(rdv);
     }
-
-
 
 }

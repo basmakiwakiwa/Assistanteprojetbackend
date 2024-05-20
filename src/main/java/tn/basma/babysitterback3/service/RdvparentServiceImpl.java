@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tn.basma.babysitterback3.dto.EmailDetails;
 import tn.basma.babysitterback3.entites.Parent;
-import tn.basma.babysitterback3.entites.Rdv;
+import tn.basma.babysitterback3.entites.RdvParent;
 import tn.basma.babysitterback3.entites.auxiliairesdevie;
 import tn.basma.babysitterback3.repositories.AssistanteRepo;
 import tn.basma.babysitterback3.repositories.ParentRepo;
@@ -16,7 +16,7 @@ import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
-public class RdvServiceImpl implements RdvService {
+public class RdvparentServiceImpl implements RdvparentService {
 
     @Autowired
     private RdvParentRepo rdvRepository;
@@ -30,28 +30,33 @@ public class RdvServiceImpl implements RdvService {
 
 
     @Override
-    public Rdv saveRdvWithParent(Long id, Long idauxiliaires, Rdv rdv) {
+    public RdvParent saveRdvWithParent(Long id, Long idauxiliaires, RdvParent rdv) {
         // Vérification des IDs
         Optional<Parent> parentOptional = parentRepo.findById(id);
-        Optional<auxiliairesdevie> auxiliairesOptional = assistanteRepo.findById(idauxiliaires);
+        Optional< auxiliairesdevie > auxiliairesOptional = assistanteRepo.findById(idauxiliaires);
 
         if (parentOptional.isPresent() && auxiliairesOptional.isPresent()) {
             Parent parent = parentOptional.get();
-            auxiliairesdevie auxiliaire = auxiliairesOptional.get();
+            auxiliairesdevie  auxiliaire = auxiliairesOptional.get();
 
-            // Assignation de l'auxiliaire
+            // Assignation du parent et de l'auxiliaire
             rdv.setParent(parent);
             rdv.setAuxiliairesdevies(auxiliaire);
+            //rdv.setFixepar("Parent");
+
+            // Définir le rôle du parent
+            rdv.setRoleRDV("Parent");
 
             // Envoi de l'email
-            EmailDetails emaildetails = new EmailDetails();
-            emaildetails.setTo(auxiliaire.getEmail());
-            emaildetails.setSubject("Demande de rendez-vous");
-            emaildetails.setMessageBody("Bonjour \n" +
+            EmailDetails emailDetails = new EmailDetails();
+            emailDetails.setTo(auxiliaire.getEmail());
+            emailDetails.setSubject("Demande de rendez-vous");
+            emailDetails.setMessageBody("Bonjour " + auxiliaire.getNom() + ",\n" +
                     "\n" +
                     "J'espère que vous allez bien.\n" +
                     "\n" +
-                    "Je suis le parent , et je souhaite convenir d'un rendez-vous pour discuter de\n" +
+                    "Je suis " + parent.getNom() + ", votre parent, et je souhaite convenir d'un rendez-vous pour discuter de\n" +
+                    "votre situation et des services dont vous avez besoin.\n" +
                     "\n" +
                     "Voici mes disponibilités pour la semaine à venir :\n" +
                     "\n" +
@@ -61,8 +66,11 @@ public class RdvServiceImpl implements RdvService {
                     "Jeudi : de 15h à 17h\n" +
                     "Pouvez-vous me confirmer un créneau qui vous convient parmi ces horaires, ou me proposer une alternative si nécessaire ?\n" +
                     "\n" +
-                    "Je vous remercie d'avance pour votre disponibilité et votre attention à notre situation.");
-            emailService.sendSimpleMail(emaildetails);
+                    "Je vous remercie d'avance pour votre disponibilité et votre attention.\n" +
+                    "\n" +
+                    "Cordialement,\n" +
+                    parent.getNom());
+            emailService.sendSimpleMail(emailDetails);
 
             // Sauvegarde du rendez-vous
             return rdvRepository.save(rdv);
@@ -70,8 +78,10 @@ public class RdvServiceImpl implements RdvService {
         return null; // Ou gestion de l'erreur selon votre logique
     }
 
+
+
     @Override
-    public List<Rdv> getAllRdvsByParentId(Long id) {
+    public List<RdvParent> getAllRdvsByParentId(Long id) {
         // Récupérer tous les rendez-vous associés à un parent spécifique
         return rdvRepository.findByParentId(id);
     }
@@ -88,11 +98,11 @@ public class RdvServiceImpl implements RdvService {
     }
 
     @Override
-    public Rdv updateRdv(Long rdvId, Rdv rdvDetails) {
+    public RdvParent updateRdv(Long rdvId, RdvParent rdvDetails) {
         // Logique pour mettre à jour un RDV spécifié par son ID avec les détails fournis
-        Optional<Rdv> rdvOptional = rdvRepository.findById(rdvId);
+        Optional<RdvParent> rdvOptional = rdvRepository.findById(rdvId);
         if (rdvOptional.isPresent()) {
-            Rdv existingRdv = rdvOptional.get();
+            RdvParent existingRdv = rdvOptional.get();
             existingRdv.setDescription(rdvDetails.getDescription());
             existingRdv.setEtatrdv(rdvDetails.getEtatrdv());
             return rdvRepository.save(existingRdv);
@@ -103,7 +113,7 @@ public class RdvServiceImpl implements RdvService {
 
 
     @Override
-    public List<Rdv> getRdvByAuxiliaireId(Long auxiliaireId) {
+    public List<RdvParent> getRdvByAuxiliaireId(Long auxiliaireId) {
         return rdvRepository.findByAuxiliairesdeviesId(auxiliaireId);
     }
 
@@ -111,8 +121,8 @@ public class RdvServiceImpl implements RdvService {
 //hthya methode mta3 accepte rdv
 
     @Override
-    public Rdv accepterRdv(Long idRdv) {
-        Rdv rdv = rdvRepository.findById(idRdv)
+    public RdvParent accepterRdv(Long idRdv) {
+        RdvParent rdv = rdvRepository.findById(idRdv)
                 .orElseThrow(() -> new IllegalArgumentException("Rdv not found with id: " + idRdv));
 
         rdv.setEtatrdv("Accepte");
@@ -123,8 +133,8 @@ public class RdvServiceImpl implements RdvService {
 
 //hthya methode Non accepte
     @Override
-    public Rdv refuserRdv(Long idRdv) {
-        Rdv rdv = rdvRepository.findById(idRdv)
+    public RdvParent refuserRdv(Long idRdv) {
+        RdvParent rdv = rdvRepository.findById(idRdv)
                 .orElseThrow(() -> new IllegalArgumentException("Rdv not found with id: " + idRdv));
 
         rdv.setEtatrdv("Non Accepte");
@@ -134,8 +144,8 @@ public class RdvServiceImpl implements RdvService {
 
 
     @Override
-    public Rdv mettreEnAttenteRdv(Long idRdv) {
-        Rdv rdv = rdvRepository.findById(idRdv)
+    public RdvParent mettreEnAttenteRdv(Long idRdv) {
+        RdvParent rdv = rdvRepository.findById(idRdv)
                 .orElseThrow(() -> new IllegalArgumentException("Rdv not found with id: " + idRdv));
 
         rdv.setEtatrdv("En attente");
@@ -145,6 +155,55 @@ public class RdvServiceImpl implements RdvService {
 
 
 
+//hthya methode envoyer auxelier rdv a parent
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

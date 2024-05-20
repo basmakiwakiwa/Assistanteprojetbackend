@@ -25,13 +25,13 @@ import java.util.Set;
 @DiscriminatorValue("Parent")
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 
-public class Parent   extends User {
+public class Parent extends User {
 //hthya zeyda
     private  String adresse;
 
 
     //hthya relation bin parent wel annonce eli bch yhabtha
-    //mappedBy  manhha annonce ethya chkoub eli bch ymapha
+    //mappedBy  manhha annonce ethya chkoun eli bch ymleha
     //cascade all mannhha kn bch nfas5ou haja raw bch yfas5hom lkoul
     @JsonIgnore
     @OneToMany(mappedBy = "parent",cascade = CascadeType.ALL)
@@ -40,7 +40,15 @@ public class Parent   extends User {
 
     @JsonIgnore
     @OneToMany(mappedBy = "parent", cascade = CascadeType.ALL)
-    private Set<Rdv> rdvs = new HashSet<>();
+    private Set<RdvParent> rdvs = new HashSet<>();
+
+
+
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "auxiliairesdevies", cascade = CascadeType.ALL)
+    private Set<Rdvauxiliaires> rdvss = new HashSet<>();
+
 
 
 

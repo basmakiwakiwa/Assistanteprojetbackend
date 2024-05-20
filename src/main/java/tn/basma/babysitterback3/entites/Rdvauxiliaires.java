@@ -14,33 +14,26 @@ import lombok.experimental.FieldDefaults;
 
 @FieldDefaults(level= AccessLevel.PRIVATE)
 @Entity
-@Builder
-public class Rdv {
-
+public class Rdvauxiliaires {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private  Long id_rdv;
+    private  Long id_rdvauxiliaires;
     private  String description;
     private String etatrdv ;
 
 
     @JsonIgnore
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "parent_id")
-    private Parent parent;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "auxiliairesdevie_id")
+    private auxiliairesdevie  auxiliairesdevies;
 
 
 
 
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "idauxiliaires")
-    private auxiliairesdevie  auxiliairesdevies;
-
-
-
-
-
+    @JoinColumn(name = "idparent")
+    private  Parent parent;
 
 
 }
