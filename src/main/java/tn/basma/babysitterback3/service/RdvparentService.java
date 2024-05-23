@@ -10,17 +10,6 @@ public interface RdvparentService {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
     List<RdvParent> getAllRdvsByParentId(Long id);
 
 
