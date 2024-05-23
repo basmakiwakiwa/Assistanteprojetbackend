@@ -14,4 +14,9 @@ public interface AnnonceParentInter {
     public AnnonceParent modifierAnnonceParentByParentId(Long idAnnonceParent, AnnonceDeto newAnnonce);
 
     //public void deleteAnnouncementForParentById(Long id, Long idAnnonceParent);
+
+
+    List<AnnonceParent> getAnnoncesByParentId(Long parentId);
+
+
 }

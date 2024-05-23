@@ -1,6 +1,5 @@
 package tn.basma.babysitterback3.entites;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -45,7 +44,7 @@ public class AnnonceParent {
     //bhy alch nista3mlou fha nista3mlou faha khter ahna par exemple fil diagramme de classe mta3na 3ana parent bhy awel haja najmou nista3mlouha kima mnjmouch
     //@JoinColumn(name="parent_id") lhne 7atina id mta3 parent eli inserha donc fil base de donne bch ywali 3ana attribute parent_id hwa parent eli inserha
 
-    @JsonIgnore
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "parent_id")
     private Parent parent;

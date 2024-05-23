@@ -15,4 +15,8 @@ public interface AnnonceParentRepository extends JpaRepository<AnnonceParent,Lon
     //void deleteByIdAnnonceParentAndParentId(Long idAnnonceParent, Long id);
 
     List<AnnonceParent> findAllByParent(Parent parent);
+
+
+    List<AnnonceParent> findByParentId(Long parentId);
+
 }

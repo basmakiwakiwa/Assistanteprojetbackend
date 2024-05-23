@@ -85,12 +85,9 @@ public class AnnonceParents  implements AnnonceParentInter{
 
 
 
-
-//hthya methode supprimer
-   /* @Override
-    @Transactional // Add @Transactional annotation here
-    public void deleteAnnouncementForParentById(Long id, Long idAnnonceParent) {
-        AnnonceParRep.deleteByIdAnnonceParentAndParentId(idAnnonceParent, id);
+    @Override
+    public List<AnnonceParent> getAnnoncesByParentId(Long parentId) {
+        return AnnonceParRep.findByParentId(parentId);
     }
-*/
+
 }

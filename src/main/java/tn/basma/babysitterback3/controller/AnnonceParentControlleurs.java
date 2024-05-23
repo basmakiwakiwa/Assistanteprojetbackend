@@ -53,16 +53,12 @@ public class AnnonceParentControlleurs {
 
 
 
-
-
-
-
-/*
-    @DeleteMapping("/{idAnnonceParent}")
-    public ResponseEntity<String> deleteAnnouncementForParentById(@PathVariable Long id, @PathVariable Long idAnnonceParent) {
-        AnnonceParServ.deleteAnnouncementForParentById(id, idAnnonceParent);
-        return ResponseEntity.ok("Announcement deleted successfully.");
+    @GetMapping("/parParent/{parentId}")
+    public List<AnnonceParent> getAnnoncesByParentId(@PathVariable Long parentId) {
+        return AnnonceParServ.getAnnoncesByParentId(parentId);
     }
 
-*/
+
+
+
 }

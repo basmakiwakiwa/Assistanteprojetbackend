@@ -12,6 +12,7 @@ import tn.basma.babysitterback3.repositories.AssistanteRepo;
 import tn.basma.babysitterback3.repositories.ParentRepo;
 import tn.basma.babysitterback3.repositories.RdvauxelierRepo;
 
+import java.util.List;
 import java.util.Optional;
 @RequiredArgsConstructor
 @Service
@@ -70,6 +71,32 @@ public class RdvauxiliairesServiceImpl implements RdvauxiliairesService {
         }
         return null; // Ou gestion de l'erreur selon votre logique
     }
+
+    @Override
+    public List<Rdvauxiliaires> getRdvByAuxiliaireId(Long id) {
+        return rdvRepository.findByAuxiliairesdeviesId(id);
+    }
+
+    @Override
+    public void deleteRdvauxiliairesById(Long id) {
+        rdvRepository.deleteById(id);
+    }
+
+    @Override
+    public Rdvauxiliaires updateRdv(Long rdvId, Rdvauxiliaires rdvDetails) {
+        // Logique pour mettre à jour un RDV spécifié par son ID avec les détails fournis
+        Optional<Rdvauxiliaires> rdvOptional = rdvRepository.findById(rdvId);
+        if (rdvOptional.isPresent()) {
+            Rdvauxiliaires existingRdv = rdvOptional.get();
+            existingRdv.setDescription(rdvDetails.getDescription());
+            existingRdv.setEtatrdv(rdvDetails.getEtatrdv());
+            return rdvRepository.save(existingRdv);
+        }
+        return null;
+    }
+
+
+
 }
 
 

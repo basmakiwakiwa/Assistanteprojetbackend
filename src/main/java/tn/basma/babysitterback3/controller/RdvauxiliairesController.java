@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.*;
 import tn.basma.babysitterback3.entites.Rdvauxiliaires;
 import tn.basma.babysitterback3.service.RdvauxiliairesServiceImpl;
 
+import java.util.List;
+
 @RequestMapping("/api/v1/rdvauxiliaires")
 @RestController
 public class RdvauxiliairesController {
@@ -24,4 +26,33 @@ public class RdvauxiliairesController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
+
+
+    @GetMapping("/byauxiliaire/{id}")
+    public ResponseEntity<List<Rdvauxiliaires>> getRdvByAuxiliaireId(@PathVariable Long id) {
+        List<Rdvauxiliaires> rdvauxiliaires = rdvService.getRdvByAuxiliaireId(id);
+        if (rdvauxiliaires != null && !rdvauxiliaires.isEmpty()) {
+            return new ResponseEntity<>(rdvauxiliaires, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteRdvauxiliairesById(@PathVariable("id") Long id) {
+        rdvService.deleteRdvauxiliairesById(id);
+        return ResponseEntity.status(HttpStatus.OK).body("Rendez-vous avec l'ID " + id + " a été supprimé avec succès.");
+    }
+
+
+    @PutMapping("/update/{rdvId}")
+    public ResponseEntity<Rdvauxiliaires> updateRdv(@PathVariable Long rdvId, @RequestBody Rdvauxiliaires rdvDetails) {
+        Rdvauxiliaires updatedRdv = rdvService.updateRdv(rdvId, rdvDetails);
+        if (updatedRdv != null) {
+            return new ResponseEntity<>(updatedRdv, HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
+
 }
