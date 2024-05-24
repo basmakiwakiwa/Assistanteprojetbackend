@@ -15,4 +15,13 @@ public interface RdvauxiliairesService {
 
     Rdvauxiliaires updateRdv(Long rdvId, Rdvauxiliaires rdvDetails);
 
+
+    List<Rdvauxiliaires> getRdvByParentId(Long parentId);
+
+    Rdvauxiliaires accepterRdv(Long idRdv);
+    Rdvauxiliaires refuserRdv(Long idRdv);
+    Rdvauxiliaires  mettreEnAttenteRdv(Long idRdv);
+    // New method
+
+
 }

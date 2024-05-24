@@ -55,4 +55,32 @@ public class RdvauxiliairesController {
     }
 
 
+
+
+    @GetMapping("/byparent/{parentId}")
+    public List<Rdvauxiliaires> getRdvByParentId(@PathVariable Long parentId) {
+        return rdvService.getRdvByParentId(parentId);
+    }
+
+
+
+    @PutMapping("/accepterRdvauxiliaires/{id}")
+    public ResponseEntity< Rdvauxiliaires> accepterRdv(@PathVariable("id") Long id) {
+        Rdvauxiliaires rdv = rdvService.accepterRdv(id);
+        return ResponseEntity.ok(rdv);
+    }
+
+    @PutMapping("/NonAccepteRdvauxiliaires/{id}")
+    public ResponseEntity<Rdvauxiliaires> refuserRdv(@PathVariable("id") Long id) {
+        Rdvauxiliaires rdv = rdvService.refuserRdv(id);
+        return ResponseEntity.ok(rdv);
+    }
+
+
+    @PutMapping("/EnAttenteRdvauxiliaires/{id}")
+    public ResponseEntity<Rdvauxiliaires> mettreEnAttenteRdv(@PathVariable("id") Long id) {
+        Rdvauxiliaires rdv = rdvService.mettreEnAttenteRdv(id);
+        return ResponseEntity.ok(rdv);
+    }
+
 }

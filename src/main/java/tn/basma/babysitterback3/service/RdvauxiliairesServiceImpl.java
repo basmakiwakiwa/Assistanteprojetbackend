@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tn.basma.babysitterback3.dto.EmailDetails;
 import tn.basma.babysitterback3.entites.Parent;
+import tn.basma.babysitterback3.entites.RdvParent;
 import tn.basma.babysitterback3.entites.Rdvauxiliaires;
 import tn.basma.babysitterback3.entites.auxiliairesdevie;
 import tn.basma.babysitterback3.repositories.AssistanteRepo;
@@ -95,6 +96,47 @@ public class RdvauxiliairesServiceImpl implements RdvauxiliairesService {
         return null;
     }
 
+
+    @Override
+    public List<Rdvauxiliaires> getRdvByParentId(Long parentId) {
+        return rdvRepository.findByParentId(parentId);
+    }
+
+
+
+    @Override
+    public Rdvauxiliaires accepterRdv(Long idRdv) {
+        Rdvauxiliaires rdv = rdvRepository.findById(idRdv)
+                .orElseThrow(() -> new IllegalArgumentException("Rdv not found with id: " + idRdv));
+
+        rdv.setEtatrdv("Accepte");
+
+        return rdvRepository.save(rdv);
+    }
+
+
+
+    @Override
+    public Rdvauxiliaires refuserRdv(Long idRdv) {
+        Rdvauxiliaires rdv = rdvRepository.findById(idRdv)
+                .orElseThrow(() -> new IllegalArgumentException("Rdv not found with id: " + idRdv));
+
+        rdv.setEtatrdv("Non Accepte");
+
+        return rdvRepository.save(rdv);
+    }
+
+
+
+    @Override
+    public Rdvauxiliaires mettreEnAttenteRdv(Long idRdv) {
+        Rdvauxiliaires rdv = rdvRepository.findById(idRdv)
+                .orElseThrow(() -> new IllegalArgumentException("Rdv not found with id: " + idRdv));
+
+        rdv.setEtatrdv("En attente");
+
+        return rdvRepository.save(rdv);
+    }
 
 
 }

@@ -15,4 +15,6 @@ public interface RdvauxelierRepo extends JpaRepository<Rdvauxiliaires,Long> {
     //List<Rdvauxiliaires> findByAuxiliairesdeviesId(Long auxiliaireId);
     List<Rdvauxiliaires> findByAuxiliairesdeviesId(Long id);
 
+
+
 }
