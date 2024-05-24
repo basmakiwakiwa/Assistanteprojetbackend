@@ -22,7 +22,7 @@ public class Rdvauxiliaires {
     private String etatrdv ;
 
 
-    @JsonIgnore
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "auxiliairesdevie_id")
     private auxiliairesdevie  auxiliairesdevies;
