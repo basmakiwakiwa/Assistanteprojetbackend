@@ -26,7 +26,6 @@ public class Image {
 
 
     @OneToOne
-
     private User userEntity;
 
 }

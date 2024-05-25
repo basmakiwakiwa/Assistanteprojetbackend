@@ -19,9 +19,7 @@ public class auxiliairesdevieDto extends RegisterRequest{
     private String  description;
     private Date dateN;
     private int     budget;
-    private String  dispo;
     private String  langues;
-
     private String  piecejustificative;
     private String  experience;
     private String  adresse;
@@ -48,7 +46,7 @@ public class auxiliairesdevieDto extends RegisterRequest{
                 .dateN(request.getDateN())
                 .image(request.getImage())
                 .budget(request.getBudget())
-                .dispo(request.getDispo())
+
                 .langues(request.getLangues())
 
 

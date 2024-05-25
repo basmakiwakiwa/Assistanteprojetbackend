@@ -28,9 +28,7 @@ public class auxiliairesdevie extends User {
     private String  description;
     private Date    dateN;
     private int     budget;
-    private String  dispo;
     private String  langues;
-
     private String  experience;
     private String  adresse;
     private int     cin;
@@ -78,6 +76,15 @@ public class auxiliairesdevie extends User {
     @JsonIgnore
     @OneToMany(mappedBy = "auxiliairesdevies", cascade = CascadeType.ALL)
     private Set<Rdvauxiliaires> rdvss = new HashSet<>();
+
+
+
+
+    @JsonIgnore
+    @OneToOne(mappedBy = "auxiliairesdeviesss")
+    private dispo dispos;
+
+
 
 
 }
