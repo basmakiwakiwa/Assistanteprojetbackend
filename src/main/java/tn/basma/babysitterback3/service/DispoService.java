@@ -8,15 +8,18 @@ import tn.basma.babysitterback3.entites.dispo;
 import tn.basma.babysitterback3.repositories.AssistanteRepo;
 import tn.basma.babysitterback3.repositories.dispoRepository;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
-public class DispoService {
+public class DispoService   implements DispoServiceinter {
 
     @Autowired
     private final dispoRepository DispoRepository;
     @Autowired
     private AssistanteRepo assistanteRepo;
 
+    @Override
     public dispo addDispoToAuxiliaire(Long auxiliaireId, dispo newDispo) {
         auxiliairesdevie auxiliaire = assistanteRepo.findById(auxiliaireId)
                 .orElseThrow(() -> new RuntimeException("Auxiliaire de vie not found"));
@@ -30,9 +33,9 @@ public class DispoService {
         return savedDispo;
     }
 
-
-    public dispo getDispoById(Long dispoId) {
-        // Implémentez la logique pour rechercher la disponibilité par ID
-        return  DispoRepository.findById(dispoId).orElse(null);
+    @Override
+    public List<dispo> getDisposByAuxiliaireId(Long auxiliaireId) {
+        return DispoRepository.findByAuxiliaireId(auxiliaireId);
     }
+
 }

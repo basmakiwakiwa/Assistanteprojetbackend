@@ -29,7 +29,7 @@ public class ProfileParentControlleur {
 
 
 //hthya methoode modifier les information de profile  parent
-    @PostMapping(value = "/Profileparent")
+    @PostMapping(value = "/ModifierProfileparent")
     public boolean updateParent(@RequestBody Parent updatedParent) {
         Optional<Parent> optionalParent = profileParentServiceimpl.getParent(updatedParent.getEmail());
         if (optionalParent.isPresent()) {

@@ -46,7 +46,7 @@ public class AuthenticationService {
 
         if (userExists) {
             return  (Response.builder()
-                    .responseMessage("User with provided email  already exists!")
+                    .responseMessage("L'utilisateur avec l'adresse e-mail fournie existe déjà !!")
                     .build());
         }
 

@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.*;
 import tn.basma.babysitterback3.entites.dispo;
 import tn.basma.babysitterback3.service.DispoService;
 
+import java.util.List;
+
 @RequestMapping("/api/v1/Dispo")
 
 @RestController
@@ -20,14 +22,9 @@ public class DispoController {
         return ResponseEntity.ok(createdDispo);
     }
 
-    @GetMapping("/{dispoId}")
-    public ResponseEntity<dispo> getDispoById(@PathVariable Long dispoId) {
-        dispo foundDispo = dispoService.getDispoById(dispoId);
-        if (foundDispo != null) {
-            return ResponseEntity.ok(foundDispo);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
-
+    @GetMapping("/AfficheDispoauxiliaire/{auxiliaireId}")
+    public ResponseEntity<List<dispo>> getDisposByAuxiliaireId(@PathVariable Long auxiliaireId) {
+        List<dispo> dispos = dispoService.getDisposByAuxiliaireId(auxiliaireId);
+        return ResponseEntity.ok(dispos);
     }
 }
