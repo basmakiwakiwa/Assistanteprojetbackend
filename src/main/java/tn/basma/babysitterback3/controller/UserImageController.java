@@ -119,6 +119,21 @@ public class UserImageController {
     //mezelet affichage mta3 tswer
 
 
+    @GetMapping("/get/{idUser}")
+    public ResponseEntity<Image> getImageByidUser(@PathVariable Long idUser) {
+        Optional<User> userOptional = userRepository.findById(idUser);
+        if (userOptional.isPresent()) {
+            User user = userOptional.get();
+            Image image = user.getUserImage();
+            if (image != null) {
+                return ResponseEntity.ok(image);
+            } else {
+                return ResponseEntity.notFound().build();
+            }
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
 
 
 

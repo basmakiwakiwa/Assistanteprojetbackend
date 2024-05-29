@@ -11,4 +11,5 @@ public interface UserImageRepository extends JpaRepository<Image,Long> {
 
     Optional<Image> findById(Long idUser);
 
+
 }
