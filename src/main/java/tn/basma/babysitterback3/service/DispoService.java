@@ -24,10 +24,10 @@ public class DispoService   implements DispoServiceinter {
         auxiliairesdevie auxiliaire = assistanteRepo.findById(auxiliaireId)
                 .orElseThrow(() -> new RuntimeException("Auxiliaire de vie not found"));
 
-        newDispo.setAuxiliairesdeviesss(auxiliaire);
+        newDispo.setAuxiliairesdevies(auxiliaire);
         dispo savedDispo = DispoRepository.save(newDispo);
 
-        auxiliaire.setDispos(savedDispo);
+        auxiliaire.getDispos().add(savedDispo);
         assistanteRepo.save(auxiliaire);
 
         return savedDispo;
@@ -35,7 +35,7 @@ public class DispoService   implements DispoServiceinter {
 
     @Override
     public List<dispo> getDisposByAuxiliaireId(Long auxiliaireId) {
-        return DispoRepository.findByAuxiliaireId(auxiliaireId);
+        return DispoRepository.findByAuxiliairesdevies_Id(auxiliaireId);
     }
 
 }

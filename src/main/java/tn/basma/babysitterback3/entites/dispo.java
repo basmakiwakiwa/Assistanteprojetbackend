@@ -12,25 +12,27 @@ import lombok.experimental.FieldDefaults;
 @FieldDefaults(level= AccessLevel.PRIVATE)
 
 @Entity
-public class dispo {
+public class dispo{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private boolean Lundi;
-    private boolean Mardi;
-    private boolean Mercredi;
-    private boolean Jeudi;
-    private boolean Vendredi;
-    private boolean Samedi;
-    private boolean Dimanche;
-    private boolean matin ;
-    private boolean ap_midi;
-    private boolean tard_ap_midi;
-    private boolean soir;
+    private String Lundi;
+    private String Mardi;
+    private String Mercredi;
+    private String Jeudi;
+    private String Vendredi;
+    private String Samedi;
+    private String Dimanche;
+    private String matin;
+    private String ap_midi;
+    private String tard_ap_midi;
+    private String soir;
 
     @JsonIgnore
-    @OneToOne
-    private auxiliairesdevie auxiliairesdeviesss;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "auxiliairesdevie_id")
+    private auxiliairesdevie  auxiliairesdevies;
+
 
 
 }

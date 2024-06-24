@@ -3,13 +3,12 @@ package tn.basma.babysitterback3.controller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import tn.basma.babysitterback3.dto.ChangePasswordRequest;
 import tn.basma.babysitterback3.entites.ChangePasswordResetRequest;
 import tn.basma.babysitterback3.entites.Responseemailpwdoub;
 import tn.basma.babysitterback3.entites.Verifpwdemail;
 import tn.basma.babysitterback3.entites.Verifyotppwdoublier;
 import tn.basma.babysitterback3.service.PasswordResetTokenServiceImpl;
-import tn.basma.babysitterback3.service.UserService;
+import tn.basma.babysitterback3.service.ChangePasswordService;
 
 import java.security.Principal;
 
@@ -18,11 +17,11 @@ import java.security.Principal;
 @RequiredArgsConstructor
 public class UserController {
 
-    private final UserService service;
+    private final ChangePasswordService service;
     private  final PasswordResetTokenServiceImpl passwordResetTokenService;
     @PatchMapping
     public ResponseEntity<?> changePassword(
-            @RequestBody ChangePasswordRequest request,
+            @RequestBody ChangePasswordResetRequest request,
             Principal connectedUser
     ) {
         service.changePassword(request, connectedUser);

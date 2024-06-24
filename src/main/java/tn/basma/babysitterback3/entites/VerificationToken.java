@@ -40,7 +40,7 @@ public class VerificationToken {
     private User user;
 
 
-
+//methode ethya bch t7sebli espiration mta3 tokn gedh modet soulou7ya
     public VerificationToken(String token, User user) {
         super();
         this.token = token;

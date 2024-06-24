@@ -14,9 +14,9 @@ public class Image {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
-    String name;
-    String type;
+    private Long id;
+    private String name;
+    private String type;
 
     @Lob // use @Lob annotation to store large binary data
     @Column(name = "picByte", columnDefinition = "LONGBLOB")

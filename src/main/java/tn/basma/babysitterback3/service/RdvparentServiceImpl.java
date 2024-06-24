@@ -51,25 +51,7 @@ public class RdvparentServiceImpl implements RdvparentService {
             EmailDetails emailDetails = new EmailDetails();
             emailDetails.setTo(auxiliaire.getEmail());
             emailDetails.setSubject("Demande de rendez-vous");
-            emailDetails.setMessageBody("Bonjour " + auxiliaire.getNom() + ",\n" +
-                    "\n" +
-                    "J'espère que vous allez bien.\n" +
-                    "\n" +
-                    "Je suis " + parent.getNom() + ", votre parent, et je souhaite convenir d'un rendez-vous pour discuter de\n" +
-                    "votre situation et des services dont vous avez besoin.\n" +
-                    "\n" +
-                    "Voici mes disponibilités pour la semaine à venir :\n" +
-                    "\n" +
-                    "Lundi : de 10h à 12h\n" +
-                    "Mardi : de 14h à 16h\n" +
-                    "Mercredi : de 9h à 11h\n" +
-                    "Jeudi : de 15h à 17h\n" +
-                    "Pouvez-vous me confirmer un créneau qui vous convient parmi ces horaires, ou me proposer une alternative si nécessaire ?\n" +
-                    "\n" +
-                    "Je vous remercie d'avance pour votre disponibilité et votre attention.\n" +
-                    "\n" +
-                    "Cordialement,\n" +
-                    parent.getNom());
+            emailDetails.setMessageBody(rdv.getDescription());
             emailService.sendSimpleMail(emailDetails);
 
             // Sauvegarde du rendez-vous

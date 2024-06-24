@@ -17,7 +17,7 @@ import java.util.List;
 public class auxiliairesdevieDto extends RegisterRequest{
 
     private String  description;
-    private Date dateN;
+    private Date    dateN;
     private int     budget;
     private String  langues;
     private String  piecejustificative;

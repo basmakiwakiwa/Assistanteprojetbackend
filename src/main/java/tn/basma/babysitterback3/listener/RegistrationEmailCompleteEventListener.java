@@ -12,7 +12,7 @@ import java.util.UUID;
 
 @Component
 @RequiredArgsConstructor
-public class RegistrationCompleteEventListener implements ApplicationListener<RegistrationCompleteEvent> {
+public class RegistrationEmailCompleteEventListener implements ApplicationListener<RegistrationCompleteEvent> {
     private final VerificationTokenService tokenService;
     private final EmailService emailService;
     private User user;

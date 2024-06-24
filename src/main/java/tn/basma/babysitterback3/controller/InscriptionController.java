@@ -7,16 +7,16 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import tn.basma.babysitterback3.dto.*;
-import tn.basma.babysitterback3.service.AuthenticationService;
+import tn.basma.babysitterback3.service.InscriptionService;
 
 import java.io.IOException;
 
 @RestController
 @RequestMapping("/api/v1/auth")
 @RequiredArgsConstructor
-public class AuthenticationController {
+public class InscriptionController {
 
-    private final AuthenticationService service;
+    private final InscriptionService service;
 
     @PostMapping("/register/Parent")
     public Response register(

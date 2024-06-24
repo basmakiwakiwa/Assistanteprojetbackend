@@ -14,7 +14,7 @@ import tn.basma.babysitterback3.service.VerificationTokenService;
 import java.util.Calendar;
 import java.util.UUID;
 
-import static tn.basma.babysitterback3.service.UserService.applicationUrl;
+import static tn.basma.babysitterback3.service.ChangePasswordService.applicationUrl;
 
 @Service
 @RequiredArgsConstructor
@@ -30,7 +30,7 @@ public class VerificationTokenServiceImpl implements VerificationTokenService {
         tokenRepository.save(verificationToken);
 
     }
-
+//hthya bch tlwjli 3la token est ce que mawjoud ou nn
     @Override
     public String validateToken(String token) {
 

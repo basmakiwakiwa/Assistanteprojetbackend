@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tn.basma.babysitterback3.dto.EmailDetails;
 import tn.basma.babysitterback3.entites.Parent;
-import tn.basma.babysitterback3.entites.RdvParent;
 import tn.basma.babysitterback3.entites.Rdvauxiliaires;
 import tn.basma.babysitterback3.entites.auxiliairesdevie;
 import tn.basma.babysitterback3.repositories.AssistanteRepo;
@@ -46,25 +45,7 @@ public class RdvauxiliairesServiceImpl implements RdvauxiliairesService {
             EmailDetails emailDetails = new EmailDetails();
             emailDetails.setTo(parent.getEmail());
             emailDetails.setSubject("Proposition de rendez-vous");
-            emailDetails.setMessageBody("Bonjour " + parent.getNom() + ",\n" +
-                    "\n" +
-                    "J'espère que vous allez bien.\n" +
-                    "\n" +
-                    "Je suis " + auxiliaire.getNom() + ", votre auxiliaire de vie, et je souhaite convenir d'un rendez-vous pour discuter de\n" +
-                    "votre situation et des services dont vous avez besoin.\n" +
-                    "\n" +
-                    "Voici mes disponibilités pour la semaine à venir :\n" +
-                    "\n" +
-                    "Lundi : de 10h à 12h\n" +
-                    "Mardi : de 14h à 16h\n" +
-                    "Mercredi : de 9h à 11h\n" +
-                    "Jeudi : de 15h à 17h\n" +
-                    "Pouvez-vous me confirmer un créneau qui vous convient parmi ces horaires, ou me proposer une alternative si nécessaire ?\n" +
-                    "\n" +
-                    "Je vous remercie d'avance pour votre disponibilité et votre attention.\n" +
-                    "\n" +
-                    "Cordialement,\n" +
-                    auxiliaire.getNom());
+            emailDetails.setMessageBody(rdv.getDescription());
             emailService.sendSimpleMail(emailDetails);
 
             // Sauvegarde du rendez-vous

@@ -79,10 +79,11 @@ public class auxiliairesdevie extends User {
 
 
 
-
     @JsonIgnore
-    @OneToOne(mappedBy = "auxiliairesdeviesss")
-    private dispo dispos;
+    @OneToMany(mappedBy = "auxiliairesdevies", cascade = CascadeType.ALL)
+    private Set<dispo> dispos = new HashSet<>();
+
+
 
 
 

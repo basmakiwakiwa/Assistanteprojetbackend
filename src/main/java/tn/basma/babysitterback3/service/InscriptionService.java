@@ -22,11 +22,11 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import static tn.basma.babysitterback3.service.UserService.applicationUrl;
+import static tn.basma.babysitterback3.service.ChangePasswordService.applicationUrl;
 
 @Service
 @RequiredArgsConstructor
-public class AuthenticationService {
+public class InscriptionService {
     private final UserRepository repository;
     private final TokenRepository tokenRepository;
     private final PasswordEncoder passwordEncoder;

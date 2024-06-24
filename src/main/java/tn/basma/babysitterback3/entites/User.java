@@ -43,20 +43,6 @@ public class User implements UserDetails {
     @Enumerated(EnumType.STRING)
     private Role role;
 
-//hthya relation bin token wel user
-    @JsonIgnore
-    @OneToMany(mappedBy = "user" , cascade = CascadeType.ALL)
-    private List<Token> tokens;
-
-    @JsonIgnore
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    private  VerificationToken verificationToken;
-
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority(role.name()));
-    }
-
     @Override
     public String getPassword() {
         return password;
@@ -87,11 +73,26 @@ public class User implements UserDetails {
         return isEnabled;
     }
 
+    @JsonIgnore
+    @OneToMany(mappedBy = "user" , cascade = CascadeType.ALL)
+    private List<Token> tokens;
+
+    @JsonIgnore
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private  VerificationToken verificationToken;
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities(){
+        return List.of(new SimpleGrantedAuthority(role.name()));
+    }
+
+
+
 
     //hthya relation image hya wel user
     //image
     @JsonIgnore
-    @OneToOne(mappedBy = "userEntity")
+    @OneToOne(mappedBy = "userEntity" , cascade = CascadeType.ALL)
     private Image userImage;
 
 

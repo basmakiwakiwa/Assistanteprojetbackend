@@ -10,12 +10,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import tn.basma.babysitterback3.dto.Response;
 import tn.basma.babysitterback3.entites.VerificationToken;
-import tn.basma.babysitterback3.listener.RegistrationCompleteEventListener;
+import tn.basma.babysitterback3.listener.RegistrationEmailCompleteEventListener;
 import tn.basma.babysitterback3.service.VerificationTokenService;
 
 import java.io.UnsupportedEncodingException;
 
-import static tn.basma.babysitterback3.service.UserService.applicationUrl;
+import static tn.basma.babysitterback3.service.ChangePasswordService.applicationUrl;
 
 @RestController
 @RequiredArgsConstructor
@@ -23,7 +23,7 @@ import static tn.basma.babysitterback3.service.UserService.applicationUrl;
 public class VerifyTokenController{
 
     private final VerificationTokenService tokenService;
-    private final RegistrationCompleteEventListener eventListener;
+    private final RegistrationEmailCompleteEventListener eventListener;
 
     @GetMapping("/email")
     public ResponseEntity<Response> verifyEmail(String token) {
